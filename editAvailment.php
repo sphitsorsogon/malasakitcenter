@@ -66,61 +66,95 @@ if (isset($_SESSION['loggedin'])) {
       </div>
 
     <?php
-    $client_id=$_GET['client_id'];
-       $sql = "SELECT * FROM tbl_client WHERE id = $client_id";
+    $avail_id=$_GET['avail_id'];
+       $sql = "SELECT * FROM listofavailment WHERE id = $avail_id";
            $result = mysqli_query($conn, $sql);
            if (mysqli_num_rows($result) > 0) {
                while ($row = mysqli_fetch_assoc($result)) {
-                   $id = $row['id'];
-                   $fullname = $row['fullname'];
-                   $age = $row['age'];
-                   $gender = $row['gender'];
-                   $address = $row['address'];
-                   $birthdate = $row['birthdate'];
+                   $admissiondate = $row['admissiondate'];
+                   $amount = $row['amount'];
+                   $requirements = $row['requirements'];
+                   $purpose = $row['purpose'];
+                   $remarks = $row['remarks'];
+                   $firstavailment = $row['firstavailment'];
+                   $dateofavailment = $row['dateofavailment'];
+                   $status = $row['status'];
                }
            }
     ?>
 
             <div class="container">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
-                    <h1 class="h2">Edit Client</h1>
+                    <h1 class="h2">Edit Availment</h1>
                 </div>
-                    <form action="action.php?id=<?php echo $_GET['id'] ?>&client_id=<?php echo $_GET['client_id'] ?>" method="POST">
+                    <form action="action.php?id=<?php echo $_GET['id'] ?>&avail_id=<?php echo $_GET['avail_id'] ?>" method="POST">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="form-group">
+                                Admission Date:
+                                    <input name="admissiondate" type="date" class="form-control" placeholder="Enter Admission Date" required value="<?php echo $admissiondate ?>">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                Amount:
+                                    <input name="amount" type="number" min="0" step=".01" class="form-control" placeholder="Enter Amount" required value="<?php echo $amount ?>">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                Requirements:
+                                    <input name="requirements" type="text" class="form-control" placeholder="Enter Requirements" value="<?php echo $requirements ?>">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                Purpose:
+                                    <input name="purpose" type="text" class="form-control" placeholder="Enter Purpose" value="<?php echo $purpose ?>">
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <input name="fullname" type="text" class="form-control" placeholder="Enter Fullname" value="<?php echo $fullname ?>">
+                                Remarks:
+                                    <input name="remarks" type="text" class="form-control" placeholder="Enter Remarks" value="<?php echo $remarks ?>">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                First Availment Social Service / MC:
+                                    <input name="firstavailment" type="text" class="form-control" placeholder="Enter First Availment Social Service / MC" value="<?php echo $firstavailment ?>">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="form-group">
-                                    <input name="age" type="text" class="form-control" placeholder="Enter age" value="<?php echo $age ?>">
+                                Date of Availment:
+                                    <input name="dateofavailment" type="date" class="form-control" placeholder="Enter Date of Availment" value="<?php echo $dateofavailment ?>">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="form-group">
-                                    <select class="form-control" name="gender" value="<?php echo $gender ?>">
-                                        <option value="<?php echo $gender ?>"><?php echo $gender ?></option>
+                                Status:
+                                    <select class="form-control" name="status" value="<?php echo $status ?>">
+                                        <option value="<?php echo $status ?>"><?php echo $status ?></option>
                                         <option value=""></option>
-                                        <option value="Female">Female</option>
-                                        <option value="Male">Male</option>
+                                        <option value="Liquidated">Liquidated</option>
+                                        <option value="Discharged">Discharged</option>
+                                        <option value="Complete">Complete</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <input name="address" type="text" class="form-control" placeholder="Enter Address" value="<?php echo $address ?>">
-                                </div>
-                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <input name="birthdate" type="date" class="form-control" placeholder="Enter Birthdate" value="<?php echo $birthdate ?>">
-                                </div>
+
+                        <!-- Hidden Fill up Form -->
+                        <div class="col-2">
+                            <div class="form-group">
+                                <input name="user_fullname" type="hidden" class="form-control" placeholder="Enter Admission Date" value="<?php echo $_SESSION['user_fullname'] ?>">
                             </div>
-                        </div>
-                        <button name="btnEditClient" type="submit" class="btn btn-primary">Edit Client</button>
+                        </div>    
+
+                        <button name="btnEditAvailment" type="submit" class="btn btn-primary">Edit Client</button>
                     </form>
             </div>
     </main>

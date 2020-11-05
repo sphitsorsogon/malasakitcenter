@@ -45,44 +45,20 @@ if (isset($_SESSION['loggedin'])) {
   </head>
   <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="home.php?id=<?php echo $_GET['id'] ?>">SPH Malasakit Center</a>
-  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <ul class="navbar-nav px-3">
-    <li class="nav-item text-nowrap">
-      <a class="nav-link" href="logout.php">Sign out</a>
-    </li>
-  </ul>
-</nav>
+      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="home.php?id=<?php echo $_GET['id'] ?>">SPH Malasakit Center</a>
+      <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <a class="nav-link" href="logout.php">Sign out</a>
+        </li>
+      </ul>
+    </nav>
 
 <div class="container-fluid">
   <div class="row">
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-      <div class="sidebar-sticky pt-3">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" href="home.php?id=<?php echo $_GET['id'] ?>">
-              <span data-feather="home"></span>
-              Dashboard <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="users"></span>
-              Customers
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Reports
-            </a>
-          </li>
-        </ul>
-
-      </div>
-    </nav>
+  <?php include 'sidebar.php';?>
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -91,6 +67,7 @@ if (isset($_SESSION['loggedin'])) {
             Add new Client
         </button>
       </div>
+      
 
         <div class="collapse" id="newClientCollapse">
             <div class="container">
@@ -137,7 +114,19 @@ if (isset($_SESSION['loggedin'])) {
         </div>
 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-            <h1 class="h2">Client Info</h1>
+            <h1 class="h2 text-danger">
+            <?php
+                $sql = "SELECT * FROM budget";
+                    $result = mysqli_query($conn, $sql);
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                          $balance = $row['amount'];
+
+                          echo 'Remaining Balance: ' . number_format($balance, 2);
+                        }
+                      }
+            ?>
+            </h1>
         </div>  
 
             <div class="container-fluid mt-3">
@@ -153,6 +142,7 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Gender</th>
                                         <th>Address</th>
                                         <th>Birthdate</th>
+                                        <th>Total Transaction</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -169,6 +159,14 @@ if (isset($_SESSION['loggedin'])) {
                                             $gender = $row['gender'];
                                             $address = $row['address'];
                                             $birthdate = $row['birthdate'];
+                                           
+                                            $sql2 = "SELECT COUNT(client_id) as transaction_count FROM listofavailment WHERE client_id = $id && `status` != 'Complete'";
+                                            $result2 = mysqli_query($conn, $sql2);
+                                            if (mysqli_num_rows($result2) > 0) {
+                                                while ($row2 = mysqli_fetch_assoc($result2)) {
+                                                  $count = $row2['transaction_count'];
+                                                }
+                                              }
                                             
                                             echo '
                                                 <tr>
@@ -178,6 +176,7 @@ if (isset($_SESSION['loggedin'])) {
                                                     <td>' . $gender . '</td>
                                                     <td>' . $address . '</td>
                                                     <td>' . $birthdate . '</td>
+                                                    <td>' . $count . '</td>
                                                     <td align="center">
                                                         <a href="addAvailment.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="eye"></span> View</a>
                                                         <a href="editClient.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
@@ -199,6 +198,7 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Age</th>
                                         <th>Gender</th>
                                         <th>Address</th>
+                                        <th>Total Transaction</th>
                                         <th>Birthdate</th>
                                     </tr>
                                 </tfoot>

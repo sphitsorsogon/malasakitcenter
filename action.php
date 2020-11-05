@@ -11,7 +11,7 @@ if (isset($_POST['btnAddClient'])) {
     $birthdate = $_POST['birthdate'];
 
     $sql = "INSERT INTO tbl_client(
-        user_fullname,
+        fullname,
         age,
         gender,
         address,
@@ -95,6 +95,7 @@ if (isset($_POST['btnAddAvailment'])) {
     $status = $_POST['status'];
     $user_fullname = $_POST['user_fullname'];
     $client_id = $_POST['client_id'];
+    $id = $_GET['id'];
 
     $sql = "INSERT INTO listofavailment(
         client_id,
@@ -121,10 +122,7 @@ if (isset($_POST['btnAddAvailment'])) {
         )";
 
         if (mysqli_query($conn, $sql)) {
-            $id = $_GET['id'];
-            $url = "./home.php?id=$id";
-            $url = str_replace(PHP_EOL, '', $url);
-            header("Location: $url");
+            updateBalance($conn, $id);
         } else {
             echo "Error: " . $sql . "" . mysqli_error($conn);
         }
@@ -134,18 +132,95 @@ if (isset($_POST['btnAddAvailment'])) {
 
 if (isset($_GET['deleteavailment'])) {
     $avail_id = $_GET['avail_id'];
+    $id = $_GET['id'];
 
     if($_GET['deleteavailment']=='true'){
         $sql = "DELETE FROM listofavailment WHERE id=$avail_id";
     
         if ($conn->query($sql) === TRUE) {
-            // $_SESSION['message'] = 'Student Update Successfully!';
-            $url = "./home.php?id=$id";
-            $url = str_replace(PHP_EOL, '', $url);
-            header("Location: $url");
+            updateBalance($conn, $id);
         } else {
             echo "Error deleting record: " . $conn->error;
         }
     }
     
+}
+
+if (isset($_POST['btnEditAvailment'])) {
+    $admission_date = $_POST['admissiondate'];
+    $amount = $_POST['amount'];
+    $requirements = $_POST['requirements'];
+    $purpose = $_POST['purpose'];
+    $remarks = $_POST['remarks'];
+    $firstavailment = $_POST['firstavailment'];
+    $dateofavailment = $_POST['dateofavailment'];
+    $status = $_POST['status'];
+    $user_fullname = $_POST['user_fullname'];
+    $avail_id = $_GET['avail_id'];
+    $id = $_GET['id'];
+
+
+        $sql = "UPDATE listofavailment SET 
+        admissiondate='$admission_date', 
+        amount='$amount', 
+        requirements='$requirements', 
+        purpose='$purpose', 
+        remarks='$remarks',
+        firstavailment='$firstavailment', 
+        dateofavailment='$dateofavailment', 
+        status='$status', 
+        user='$user_fullname'
+        WHERE 
+        id='$avail_id'";
+    
+
+    if ($conn->query($sql) === TRUE) {
+        updateBalance($conn, $id);
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+    
+}
+
+if (isset($_POST['btnAddBudget'])) {
+    $amount = $_POST['amount'];
+    $date = $_POST['budget_date'];
+    $id = $_GET['id'];
+
+    $sql = "INSERT INTO budget_history(
+        amount,
+        date
+        ) VALUES (
+        '$amount',
+        '$date'
+        )";
+        if (mysqli_query($conn, $sql)) {
+            updateBalance($conn, $id);
+        } else {
+            echo "Error: " . $sql . "" . mysqli_error($conn);
+        }
+        $conn->close();
+
+}
+
+function updateBalance($conn, $id){
+    $sql2 = "SELECT balance FROM remaining_balance";
+    $result = mysqli_query($conn, $sql2);
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $balance = $row['balance'];
+        }
+    }
+
+    $sql3 = "UPDATE budget SET 
+    amount='$balance'
+    WHERE 
+    id='1'";
+    if ($conn->query($sql3) === TRUE) {
+        $url = "./home.php?id=$id";
+        $url = str_replace(PHP_EOL, '', $url);
+        header("Location: $url");
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
 }

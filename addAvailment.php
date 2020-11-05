@@ -69,31 +69,7 @@ if (isset($_SESSION['loggedin'])) {
 
 <div class="container-fluid">
   <div class="row">
-    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-      <div class="sidebar-sticky pt-3">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link" href="home.php?id=<?php echo $_GET['id'] ?>">
-              <span data-feather="home"></span>
-              Dashboard <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="users"></span>
-              Customers
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="bar-chart-2"></span>
-              Reports
-            </a>
-          </li>
-        </ul>
-
-      </div>
-    </nav>
+  <?php include 'sidebar.php';?>
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -119,7 +95,7 @@ if (isset($_SESSION['loggedin'])) {
                             <div class="col-2">
                                 <div class="form-group">
                                 Amount:
-                                    <input name="amount" type="number" class="form-control" placeholder="Enter Amount" required>
+                                    <input name="amount" type="number" min="0" step=".01" class="form-control" placeholder="Enter Amount" required>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -203,6 +179,7 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Amount</th>
                                         <th>Requirements</th>
                                         <th>Purpose</th>
+                                        <th>Remarks</th>
                                         <th>Date of Availment</th>
                                         <th>First Availment Social Service / MC</th>
                                         <th>Status</th>
@@ -227,7 +204,8 @@ if (isset($_SESSION['loggedin'])) {
                                             $admissiondate = $row['admissiondate'];
                                             $amount = $row['amount'];
                                             $requirements = $row['requirements'];
-                                            $purpose = $row['remarks'];
+                                            $remarks = $row['remarks'];
+                                            $purpose = $row['purpose'];
                                             $firstavailment = $row['firstavailment'];
                                             $dateofavailemnt = $row['dateofavailment'];
                                             $status = $row['status'];
@@ -239,17 +217,20 @@ if (isset($_SESSION['loggedin'])) {
                                                     <td>' . $amount . '</td>
                                                     <td>' . $requirements . '</td>
                                                     <td>' . $purpose . '</td>
+                                                    <td>' . $remarks . '</td>
                                                     <td>' . $dateofavailemnt . '</td>
                                                     <td>' . $firstavailment . '</td>
                                                     <td>' . $status . '</td>
                                                     <td>' . $user . '</td>
                                                     <td align="center">
-                                                     <a href="editClient.php?id='.$_GET['id'].'&avail_id='.$avail_id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
-                                                     <a href="action.php?id='.$_GET['id'].'&avail_id='.$avail_id.'&deleteavailment=true" class="btn btn-md btn-outline-secondary"><span data-feather="trash"></span> Delete</a>
+                                                     <a href="editAvailment.php?id='.$_GET['id'].'&avail_id='.$avail_id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
                                                     </button>
                                                     </td>
                                                 </tr>
                                                 ';
+
+                                                // <a href="action.php?id='.$_GET['id'].'&avail_id='.$avail_id.'&deleteavailment=true" class="btn btn-md btn-outline-secondary"><span data-feather="trash"></span> Delete</a>
+
                                         }
                                     }
                                     ?>
@@ -262,6 +243,7 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Amount</th>
                                         <th>Requirements</th>
                                         <th>Purpose</th>
+                                        <th>Remarks</th>
                                         <th>Date of Availment</th>
                                         <th>First Availment Social Service / MC</th>
                                         <th>Status</th>

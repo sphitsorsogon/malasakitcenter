@@ -65,63 +65,85 @@ if (isset($_SESSION['loggedin'])) {
         <h1 class="h2">Dashboard - <?php echo $_SESSION['user_fullname'] ?></h1>
       </div>
 
-    <?php
-    $client_id=$_GET['client_id'];
-       $sql = "SELECT * FROM tbl_client WHERE id = $client_id";
-           $result = mysqli_query($conn, $sql);
-           if (mysqli_num_rows($result) > 0) {
-               while ($row = mysqli_fetch_assoc($result)) {
-                   $id = $row['id'];
-                   $fullname = $row['fullname'];
-                   $age = $row['age'];
-                   $gender = $row['gender'];
-                   $address = $row['address'];
-                   $birthdate = $row['birthdate'];
-               }
-           }
-    ?>
 
             <div class="container">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
-                    <h1 class="h2">Edit Client</h1>
+                    <h1 class="h2">Add Budget</h1>
                 </div>
-                    <form action="action.php?id=<?php echo $_GET['id'] ?>&client_id=<?php echo $_GET['client_id'] ?>" method="POST">
+                    <form action="action.php?id=<?php echo $_GET['id'] ?>" method="POST">
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <div class="form-group">
-                                    <input name="fullname" type="text" class="form-control" placeholder="Enter Fullname" value="<?php echo $fullname ?>">
+                                Date:
+                                    <input name="budget_date" type="date" class="form-control"required>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-6">
                                 <div class="form-group">
-                                    <input name="age" type="text" class="form-control" placeholder="Enter age" value="<?php echo $age ?>">
+                                Amount:
+                                    <input name="amount" type="number" min="0" step=".01" class="form-control" placeholder="Enter Amount" required>
                                 </div>
                             </div>
-                            <div class="col-2">
-                                <div class="form-group">
-                                    <select class="form-control" name="gender" value="<?php echo $gender ?>">
-                                        <option value="<?php echo $gender ?>"><?php echo $gender ?></option>
-                                        <option value=""></option>
-                                        <option value="Female">Female</option>
-                                        <option value="Male">Male</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <input name="address" type="text" class="form-control" placeholder="Enter Address" value="<?php echo $address ?>">
-                                </div>
-                            </div>
+                            
                         </div>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <input name="birthdate" type="date" class="form-control" placeholder="Enter Birthdate" value="<?php echo $birthdate ?>">
-                                </div>
-                            </div>
-                        </div>
-                        <button name="btnEditClient" type="submit" class="btn btn-primary">Edit Client</button>
+                        
+                        <button name="btnAddBudget" type="submit" class="btn btn-primary">Add Budget</button>
                     </form>
+
+                    <div class="container-fluid mt-3">
+                <div class="row">
+                        <div class="col-md-12 border border-info">
+                            <div class="table-responsive">
+                            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                <?php
+                                $sql = "SELECT * FROM budget_history ORDER BY id desc LIMIT 12";
+                                    $result = mysqli_query($conn, $sql);
+                                    if (mysqli_num_rows($result) > 0) {
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $id = $_GET['id'];
+                                            $amount = $row['amount'];
+                                            $date = $row['date'];
+                                            
+                                            echo '
+                                                <tr>
+                                                    <td>' . $amount . '</td>
+                                                    <td>' . $date . '</td>
+                                                    <td align="center">
+                                                        <a href="addAvailment.php?id='.$_GET['id'].'" class="btn btn-md btn-outline-secondary"><span data-feather="eye"></span> View</a>
+                                                        <a href="editClient.php?id='.$_GET['id'].'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
+                                                    </td>
+                                                </tr>
+                                                ';
+                                                // Delete Client
+                                                // <a href="action.php?id='.$_GET['id'].'&client_id='.$id.'&delete=true" class="btn btn-md btn-outline-secondary"><span data-feather="trash"></span> Delete</a>
+
+                                        }
+                                    }
+                                    ?>
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                        
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>                           
+            </div>
+
             </div>
     </main>
   </div>
