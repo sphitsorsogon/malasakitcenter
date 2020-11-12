@@ -79,6 +79,7 @@ if (isset($_SESSION['loggedin'])) {
                    $birthdate = $row['birthdate'];
                    $requirements = $row['requirements'];
                    $patient_status = $row['patient_status'];
+                   $fullname_client = $row['fullname_client'];
                }
            }
     ?>
@@ -92,6 +93,11 @@ if (isset($_SESSION['loggedin'])) {
                             <div class="col-4">
                                 <div class="form-group">
                                     <input name="fullname" type="text" class="form-control" placeholder="Enter Fullname" value="<?php echo $fullname ?>">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <input name="fullname_client" type="text" class="form-control" placeholder="Enter Beneficiary Name" value="<?php echo $fullname_client ?>">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -109,7 +115,7 @@ if (isset($_SESSION['loggedin'])) {
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-12">
                                 <div class="form-group">
                                     <input name="address" type="text" class="form-control" placeholder="Enter Address" value="<?php echo $address ?>">
                                 </div>

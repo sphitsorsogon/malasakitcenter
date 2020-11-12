@@ -5,6 +5,7 @@ include_once './connection.php';
 
 if (isset($_POST['btnAddClient'])) {
     $fullname = $_POST['fullname'];
+    $beneficiary_name = $_POST['fullname_client'];
     $age = $_POST['age'];
     $gender = $_POST['gender'];
     $address = $_POST['address'];
@@ -13,6 +14,7 @@ if (isset($_POST['btnAddClient'])) {
 
     $sql = "INSERT INTO tbl_client(
         fullname,
+        fullname_client,
         age,
         gender,
         address,
@@ -20,6 +22,7 @@ if (isset($_POST['btnAddClient'])) {
         requirements
         ) VALUES (
         '$fullname',
+        '$beneficiary_name',
         '$age',
         '$gender',
         '$address',
@@ -41,20 +44,24 @@ if (isset($_POST['btnAddClient'])) {
 
 if (isset($_POST['btnEditClient'])) {
     $fullname = $_POST['fullname'];
+    $beneficiary_name = $_POST['fullname_client'];
     $age = $_POST['age'];
     $gender = $_POST['gender'];
     $address = $_POST['address'];
     $birthdate = $_POST['birthdate'];
     $patient_status = $_POST['patient_status'];
+    $requirements = $_POST['requirements'];
     $id = $_GET['client_id'];
 
         $sql = "UPDATE tbl_client SET 
         fullname='$fullname', 
         patient_status='$patient_status', 
+        fullname_client='$beneficiary_name', 
         age='$age', 
         gender='$gender', 
         address='$address', 
-        birthdate='$birthdate'
+        birthdate='$birthdate',
+        requirements = '$requirements'
         WHERE 
         id='$id'";
     

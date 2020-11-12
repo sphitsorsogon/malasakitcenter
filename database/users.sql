@@ -17,9 +17,11 @@ CREATE TABLE `budget` (
   `id` int(12) unsigned NOT NULL AUTO_INCREMENT,
   `amount` double DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 
+INSERT INTO budget VALUES
+("1","0");
 
 
 
@@ -42,7 +44,6 @@ CREATE TABLE `listofavailment` (
   `user` varchar(50) DEFAULT NULL,
   `admissiondate` varchar(50) DEFAULT NULL,
   `amount` varchar(50) DEFAULT NULL,
-  `requirements` varchar(255) DEFAULT NULL,
   `purpose` varchar(255) DEFAULT NULL,
   `remarks` varchar(255) DEFAULT NULL,
   `firstavailment` varchar(50) DEFAULT NULL,
@@ -68,6 +69,7 @@ INSERT INTO remaining_balance VALUES
 CREATE TABLE `tbl_client` (
   `id` int(24) unsigned NOT NULL AUTO_INCREMENT,
   `fullname` varchar(255) NOT NULL,
+  `fullname_client` varchar(255) NOT NULL,
   `age` int(12) NOT NULL,
   `gender` varchar(50) NOT NULL,
   `address` varchar(50) NOT NULL,
@@ -89,7 +91,7 @@ CREATE TABLE `user` (
   `user_fullname` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 
 INSERT INTO user VALUES
@@ -98,7 +100,11 @@ INSERT INTO user VALUES
 ("3","sjndolot","0214s","Sarah Jane F. Novela-Dolot"),
 ("4","jjhainto","jj11","Janela Joven Hainto"),
 ("5","hrecto","Hazel28@","Hazel Martinez Recto"),
-("6","031999","mtmirabueno","Ma. Trina B. Mirabueno");
+("6","031999","mtmirabueno","Ma. Trina B. Mirabueno"),
+("7","mduka","alem","Mela Geronilla-Duka"),
+("8","icsalomon","june1998","Ivy Collin J. Salomon"),
+("9","fmmaquinana","iwmcvin","Flora M. Maquiñana"),
+("10","mcmirandilla","122597","Ma. Christine N. Mirandilla");
 
 
 

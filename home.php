@@ -64,7 +64,7 @@ if (isset($_SESSION['loggedin'])) {
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard - <?php echo $_SESSION['user_fullname'] ?></h1>
         <button class="btn btn-md btn-outline-secondary" type="button" data-toggle="collapse" data-target="#newClientCollapse" aria-expanded="false" aria-controls="newClientCollapse">
-            Add new Client
+            Add new Patient
         </button>
       </div>
       
@@ -72,13 +72,18 @@ if (isset($_SESSION['loggedin'])) {
         <div class="collapse" id="newClientCollapse">
             <div class="container">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
-                    <h1 class="h2">New Client</h1>
+                    <h1 class="h2">New Patient</h1>
                 </div>
                     <form action="action.php?id=<?php echo $_GET['id'] ?>" method="POST">
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
                                     <input name="fullname" type="text" class="form-control" placeholder="Enter Fullname">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <input name="fullname_client" type="text" class="form-control" placeholder="Enter Beneficiary Name">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -95,7 +100,7 @@ if (isset($_SESSION['loggedin'])) {
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-12">
                                 <div class="form-group">
                                     <input name="address" type="text" class="form-control" placeholder="Enter Address">
                                 </div>
@@ -113,7 +118,7 @@ if (isset($_SESSION['loggedin'])) {
                                 </div>
                             </div>
                         </div>
-                        <button name="btnAddClient" type="submit" class="btn btn-primary">Add New Client</button>
+                        <button name="btnAddClient" type="submit" class="btn btn-primary">Add New Patient</button>
                     </form>
             </div>
         </div>
@@ -151,7 +156,8 @@ if (isset($_SESSION['loggedin'])) {
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Name</th>
+                                        <th>Patient Name</th>
+                                        <th>Beneficiary Name</th>
                                         <th>Age</th>
                                         <th>Gender</th>
                                         <th>Address</th>
@@ -180,6 +186,7 @@ if (isset($_SESSION['loggedin'])) {
                                             $birthdate = $row['birthdate'];
                                             $requirements = $row['requirements'];
                                             $patient_status = $row['patient_status'];
+                                            $beneficiary_name = $row['fullname_client'];
 
                                             $sql2 = "SELECT SUM(amount) as balance FROM listofavailment WHERE client_id = $id && status != 'Complete' ";
                                                 $result2 = mysqli_query($conn, $sql2);
@@ -201,6 +208,7 @@ if (isset($_SESSION['loggedin'])) {
                                                 <tr>
                                                     <td>' . $id . '</td>
                                                     <td>' . $fullname . '</td>
+                                                    <td>' . $beneficiary_name . '</td>
                                                     <td>' . $age . '</td>
                                                     <td>' . $gender . '</td>
                                                     <td>' . $address . '</td>
@@ -232,7 +240,8 @@ if (isset($_SESSION['loggedin'])) {
                                 <tfoot>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Name</th>
+                                        <th>Patient Name</th>
+                                        <th>Beneficiary Name</th>
                                         <th>Age</th>
                                         <th>Gender</th>
                                         <th>Address</th>
