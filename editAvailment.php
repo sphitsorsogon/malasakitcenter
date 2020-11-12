@@ -139,8 +139,8 @@ if (isset($_SESSION['loggedin'])) {
                                     <select class="form-control" name="status" value="<?php echo $status ?>">
                                         <option value="<?php echo $status ?>"><?php echo $status ?></option>
                                         <option value=""></option>
-                                        <option value="Liquidated">Liquidated</option>
-                                        <option value="Discharged">Discharged</option>
+                                        <!-- <option value="Liquidated">Liquidated</option>
+                                        <option value="Discharged">Discharged</option> -->
                                         <option value="Complete">Complete</option>
                                     </select>
                                 </div>

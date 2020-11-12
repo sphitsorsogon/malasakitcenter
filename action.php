@@ -9,19 +9,22 @@ if (isset($_POST['btnAddClient'])) {
     $gender = $_POST['gender'];
     $address = $_POST['address'];
     $birthdate = $_POST['birthdate'];
+    $requirements = $_POST['requirements'];
 
     $sql = "INSERT INTO tbl_client(
         fullname,
         age,
         gender,
         address,
-        birthdate
+        birthdate,
+        requirements
         ) VALUES (
         '$fullname',
         '$age',
         '$gender',
         '$address',
-        '$birthdate'
+        '$birthdate',
+        '$requirements'
         )";
 
         if (mysqli_query($conn, $sql)) {
@@ -42,10 +45,12 @@ if (isset($_POST['btnEditClient'])) {
     $gender = $_POST['gender'];
     $address = $_POST['address'];
     $birthdate = $_POST['birthdate'];
+    $patient_status = $_POST['patient_status'];
     $id = $_GET['client_id'];
 
         $sql = "UPDATE tbl_client SET 
         fullname='$fullname', 
+        patient_status='$patient_status', 
         age='$age', 
         gender='$gender', 
         address='$address', 

@@ -74,7 +74,7 @@ if (isset($_SESSION['loggedin'])) {
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
                     <h1 class="h2">New Client</h1>
                 </div>
-                    <form action="action.php" method="POST">
+                    <form action="action.php?id=<?php echo $_GET['id'] ?>" method="POST">
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
@@ -107,6 +107,11 @@ if (isset($_SESSION['loggedin'])) {
                                     <input name="birthdate" type="date" class="form-control" placeholder="Enter Birthdate">
                                 </div>
                             </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <input name="requirements" type="text" class="form-control" placeholder="Enter Requirements" value="VALID ID, MEDICAL CERTIFICATE, CERTIFICATE OF INDIGENCY">
+                                </div>
+                            </div>
                         </div>
                         <button name="btnAddClient" type="submit" class="btn btn-primary">Add New Client</button>
                     </form>
@@ -127,6 +132,15 @@ if (isset($_SESSION['loggedin'])) {
                       }
             ?>
             </h1>
+            <h2>
+                <?php 
+                    $sql = "SELECT * FROM tbl_client WHERE patient_status ='Discharged'";
+                    $result = mysqli_query($conn, $sql);
+                    $total_discharged = mysqli_num_rows($result) ;
+                    echo 'Ready to Liquidate Counter: ' . $total_discharged; 
+                        
+                ?>
+            </h2>
         </div>  
 
             <div class="container-fluid mt-3">
@@ -142,7 +156,9 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Gender</th>
                                         <th>Address</th>
                                         <th>Birthdate</th>
-                                        <th>Total Transaction</th>
+                                        <th>Requirements</th>
+                                        <th>Liquidation Status</th>
+                                        <th>Patient Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -152,22 +168,35 @@ if (isset($_SESSION['loggedin'])) {
                                 $sql = "SELECT * FROM tbl_client ORDER BY id desc";
                                     $result = mysqli_query($conn, $sql);
                                     if (mysqli_num_rows($result) > 0) {
+
+                                        $total_client = mysqli_num_rows($result) ;
+
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             $id = $row['id'];
                                             $fullname = $row['fullname'];
                                             $age = $row['age'];
                                             $gender = $row['gender'];
-                                            $address = $row['address'];
+                                            $address = $row['address']; 
                                             $birthdate = $row['birthdate'];
-                                           
-                                            $sql2 = "SELECT COUNT(client_id) as transaction_count FROM listofavailment WHERE client_id = $id && `status` != 'Complete'";
-                                            $result2 = mysqli_query($conn, $sql2);
-                                            if (mysqli_num_rows($result2) > 0) {
-                                                while ($row2 = mysqli_fetch_assoc($result2)) {
-                                                  $count = $row2['transaction_count'];
+                                            $requirements = $row['requirements'];
+                                            $patient_status = $row['patient_status'];
+
+                                            $sql2 = "SELECT SUM(amount) as balance FROM listofavailment WHERE client_id = $id && status != 'Complete' ";
+                                                $result2 = mysqli_query($conn, $sql2);
+                                                if (mysqli_num_rows($result2) > 0) {
+                                                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                                                    $balance = $row2['balance'];
+                                                    $total =  2000 - $balance;
+                                                    }
                                                 }
-                                              }
-                                            
+                                            // $sql2 = "SELECT COUNT(client_id) as transaction_count FROM listofavailment WHERE client_id = $id && `status` != 'Complete'";
+                                            // $result2 = mysqli_query($conn, $sql2);
+                                            // if (mysqli_num_rows($result2) > 0) {
+                                            //     while ($row2 = mysqli_fetch_assoc($result2)) {
+                                            //       $count = $row2['transaction_count'];
+                                            //     }
+                                            //   }
+
                                             echo '
                                                 <tr>
                                                     <td>' . $id . '</td>
@@ -176,7 +205,16 @@ if (isset($_SESSION['loggedin'])) {
                                                     <td>' . $gender . '</td>
                                                     <td>' . $address . '</td>
                                                     <td>' . $birthdate . '</td>
-                                                    <td>' . $count . '</td>
+                                                    <td>' . $requirements . '</td>
+                                                    <td>';
+                                                    if($total <= 0){
+                                                        echo 'Ready to Liquidate';
+                                                    } else {
+                                                        echo 'Active';
+                                                    }
+                                                    echo' 
+                                                    </td>
+                                                    <td>' . $patient_status . '</td>
                                                     <td align="center">
                                                         <a href="addAvailment.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="eye"></span> View</a>
                                                         <a href="editClient.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
@@ -198,8 +236,11 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Age</th>
                                         <th>Gender</th>
                                         <th>Address</th>
-                                        <th>Total Transaction</th>
                                         <th>Birthdate</th>
+                                        <th>Requirements</th>
+                                        <th>Liquidation Status</th>
+                                        <th>Patient Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </tfoot>
                             </table>

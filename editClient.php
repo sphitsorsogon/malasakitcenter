@@ -77,6 +77,8 @@ if (isset($_SESSION['loggedin'])) {
                    $gender = $row['gender'];
                    $address = $row['address'];
                    $birthdate = $row['birthdate'];
+                   $requirements = $row['requirements'];
+                   $patient_status = $row['patient_status'];
                }
            }
     ?>
@@ -117,6 +119,20 @@ if (isset($_SESSION['loggedin'])) {
                             <div class="col-4">
                                 <div class="form-group">
                                     <input name="birthdate" type="date" class="form-control" placeholder="Enter Birthdate" value="<?php echo $birthdate ?>">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input name="requirements" type="text" class="form-control" placeholder="Enter Requirements" value="<?php echo $requirements ?>">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <select class="form-control" name="patient_status" value="<?php echo $patient_status ?>">
+                                        <option value="<?php echo $patient_status ?>"><?php echo $patient_status ?></option>
+                                        <option value=""></option>
+                                        <option value="Discharged">Discharged</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

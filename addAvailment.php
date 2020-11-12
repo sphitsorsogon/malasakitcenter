@@ -74,7 +74,7 @@ if (isset($_SESSION['loggedin'])) {
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard - <?php echo $user_fullname ?></h1>
-        <button class="btn btn-md btn-outline-secondary" type="button" data-toggle="collapse" data-target="#newClientCollapse" aria-expanded="false" aria-controls="newClientCollapse">
+        <button  class="btn btn-md btn-outline-secondary" type="button" data-toggle="collapse" data-target="#newClientCollapse" aria-expanded="false" aria-controls="newClientCollapse">
             Add new Availment
         </button>
       </div>
@@ -135,8 +135,8 @@ if (isset($_SESSION['loggedin'])) {
                                 Status:
                                     <select class="form-control" name="status">
                                         <option value=""></option>
-                                        <option value="Liquidated">Liquidated</option>
-                                        <option value="Discharged">Discharged</option>
+                                        <!-- <option value="Liquidated">Liquidated</option>
+                                        <option value="Discharged">Discharged</option> -->
                                         <option value="Complete">Complete</option>
                                     </select>
                                 </div>
@@ -164,8 +164,23 @@ if (isset($_SESSION['loggedin'])) {
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
             <h1 class="h2"><?php 
             if(isset($client_name)){
-                echo $client_name;} ?></h1>
+                echo $client_name;} ?></h1> - 
+                <h2 class="text-danger">
+                    <?php
+                    $client_id = $_GET['client_id'];
+                    $sql = "SELECT SUM(amount) as balance FROM listofavailment WHERE client_id = $client_id && status != 'Complete' ";
+                        $result = mysqli_query($conn, $sql);
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                            $balance = $row['balance'];
+                            $total =  2000 - $balance;
+                            echo 'Remaining Balance: ' . number_format($total, 2);
+                            }
+                        }
+                    ?>
+                </h2>
         </div>  
+       
 
             <div class="container-fluid mt-3">
                 <div class="row">
