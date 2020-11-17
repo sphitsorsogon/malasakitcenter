@@ -83,7 +83,7 @@ if (isset($_SESSION['loggedin'])) {
                             </div>
                             <div class="col-4">
                                 <div class="form-group">
-                                    <input name="fullname_client" type="text" class="form-control" placeholder="Enter Beneficiary Name">
+                                    <input name="fullname_client" type="text" class="form-control" placeholder="Enter Client Name">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -157,7 +157,7 @@ if (isset($_SESSION['loggedin'])) {
                                     <tr>
                                         <th>Id</th>
                                         <th>Patient Name</th>
-                                        <th>Beneficiary Name</th>
+                                        <th>Client Name</th>
                                         <th>Age</th>
                                         <th>Gender</th>
                                         <th>Address</th>
@@ -241,7 +241,7 @@ if (isset($_SESSION['loggedin'])) {
                                     <tr>
                                         <th>Id</th>
                                         <th>Patient Name</th>
-                                        <th>Beneficiary Name</th>
+                                        <th>Client Name</th>
                                         <th>Age</th>
                                         <th>Gender</th>
                                         <th>Address</th>

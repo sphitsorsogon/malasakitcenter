@@ -73,7 +73,7 @@ if (isset($_SESSION['loggedin'])) {
                while ($row = mysqli_fetch_assoc($result)) {
                    $admissiondate = $row['admissiondate'];
                    $amount = $row['amount'];
-                   $requirements = $row['requirements'];
+                //    $requirements = $row['requirements'];
                    $purpose = $row['purpose'];
                    $remarks = $row['remarks'];
                    $firstavailment = $row['firstavailment'];
@@ -101,26 +101,21 @@ if (isset($_SESSION['loggedin'])) {
                                     <input name="amount" type="number" min="0" step=".01" class="form-control" placeholder="Enter Amount" required value="<?php echo $amount ?>">
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                Requirements:
-                                    <input name="requirements" type="text" class="form-control" placeholder="Enter Requirements" value="<?php echo $requirements ?>">
-                                </div>
-                            </div>
                             <div class="col-2">
                                 <div class="form-group">
                                 Purpose:
                                     <input name="purpose" type="text" class="form-control" placeholder="Enter Purpose" value="<?php echo $purpose ?>">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
                                 Remarks:
                                     <input name="remarks" type="text" class="form-control" placeholder="Enter Remarks" value="<?php echo $remarks ?>">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            
                             <div class="col-4">
                                 <div class="form-group">
                                 First Availment Social Service / MC:

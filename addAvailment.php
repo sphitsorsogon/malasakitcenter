@@ -98,26 +98,21 @@ if (isset($_SESSION['loggedin'])) {
                                     <input name="amount" type="number" min="0" step=".01" class="form-control" placeholder="Enter Amount" required>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                Requirements:
-                                    <input name="requirements" type="text" class="form-control" placeholder="Enter Requirements">
-                                </div>
-                            </div>
                             <div class="col-2">
                                 <div class="form-group">
                                 Purpose:
                                     <input name="purpose" type="text" class="form-control" placeholder="Enter Purpose">
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
                                 Remarks:
                                     <input name="remarks" type="text" class="form-control" placeholder="Enter Remarks">
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            
                             <div class="col-4">
                                 <div class="form-group">
                                 First Availment Social Service / MC:
@@ -192,7 +187,6 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Id</th>
                                         <th>Admission Date</th>
                                         <th>Amount</th>
-                                        <th>Requirements</th>
                                         <th>Purpose</th>
                                         <th>Remarks</th>
                                         <th>Date of Availment</th>
@@ -207,7 +201,7 @@ if (isset($_SESSION['loggedin'])) {
                                 <?php
                                 $sql = "SELECT * FROM view_clientinfo WHERE client_id = $client_id AND status != 'Complete'  ORDER BY id desc";
                                     $result = mysqli_query($conn, $sql);
-                                    if (mysqli_num_rows($result) > 0) {
+                                    if ($result) {
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             $avail_id = $row['id'];
                                             $fullname = $row['fullname'];
@@ -218,7 +212,6 @@ if (isset($_SESSION['loggedin'])) {
                                             $user = $row['user'];
                                             $admissiondate = $row['admissiondate'];
                                             $amount = $row['amount'];
-                                            $requirements = $row['requirements'];
                                             $remarks = $row['remarks'];
                                             $purpose = $row['purpose'];
                                             $firstavailment = $row['firstavailment'];
@@ -230,7 +223,6 @@ if (isset($_SESSION['loggedin'])) {
                                                     <td>' . $avail_id . '</td>
                                                     <td>' . $admissiondate . '</td>
                                                     <td>' . $amount . '</td>
-                                                    <td>' . $requirements . '</td>
                                                     <td>' . $purpose . '</td>
                                                     <td>' . $remarks . '</td>
                                                     <td>' . $dateofavailemnt . '</td>
@@ -256,7 +248,6 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Id</th>
                                         <th>Admission Date</th>
                                         <th>Amount</th>
-                                        <th>Requirements</th>
                                         <th>Purpose</th>
                                         <th>Remarks</th>
                                         <th>Date of Availment</th>

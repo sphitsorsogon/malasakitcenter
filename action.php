@@ -99,7 +99,7 @@ if (isset($_GET['deleteclient'])) {
 if (isset($_POST['btnAddAvailment'])) {
     $admission_date = $_POST['admissiondate'];
     $amount = $_POST['amount'];
-    $requirements = $_POST['requirements'];
+    // $requirements = $_POST['requirements'];
     $purpose = $_POST['purpose'];
     $remarks = $_POST['remarks'];
     $firstavailment = $_POST['firstavailment'];
@@ -113,7 +113,7 @@ if (isset($_POST['btnAddAvailment'])) {
         client_id,
         admissiondate,
         amount,
-        requirements,
+        -- requirements,
         purpose,
         remarks,
         firstavailment,
@@ -124,7 +124,7 @@ if (isset($_POST['btnAddAvailment'])) {
         '$client_id',
         '$admission_date',
         '$amount',
-        '$requirements',
+        -- '$requirements',
         '$purpose',
         '$remarks',
         '$firstavailment',
@@ -161,7 +161,7 @@ if (isset($_GET['deleteavailment'])) {
 if (isset($_POST['btnEditAvailment'])) {
     $admission_date = $_POST['admissiondate'];
     $amount = $_POST['amount'];
-    $requirements = $_POST['requirements'];
+    // $requirements = $_POST['requirements'];
     $purpose = $_POST['purpose'];
     $remarks = $_POST['remarks'];
     $firstavailment = $_POST['firstavailment'];
@@ -175,7 +175,7 @@ if (isset($_POST['btnEditAvailment'])) {
         $sql = "UPDATE listofavailment SET 
         admissiondate='$admission_date', 
         amount='$amount', 
-        requirements='$requirements', 
+        -- requirements='$requirements', 
         purpose='$purpose', 
         remarks='$remarks',
         firstavailment='$firstavailment', 
