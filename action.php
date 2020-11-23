@@ -11,7 +11,7 @@ if (isset($_POST['btnAddClient'])) {
     $address = $_POST['address'];
     $birthdate = $_POST['birthdate'];
     $requirements = $_POST['requirements'];
-
+    $accountable = $_POST['accountable'];
     $sql = "INSERT INTO tbl_client(
         fullname,
         fullname_client,
@@ -19,7 +19,8 @@ if (isset($_POST['btnAddClient'])) {
         gender,
         address,
         birthdate,
-        requirements
+        requirements,
+        accountable
         ) VALUES (
         '$fullname',
         '$beneficiary_name',
@@ -27,7 +28,8 @@ if (isset($_POST['btnAddClient'])) {
         '$gender',
         '$address',
         '$birthdate',
-        '$requirements'
+        '$requirements',
+        '$accountable'
         )";
 
         if (mysqli_query($conn, $sql)) {
@@ -51,6 +53,7 @@ if (isset($_POST['btnEditClient'])) {
     $birthdate = $_POST['birthdate'];
     $patient_status = $_POST['patient_status'];
     $requirements = $_POST['requirements'];
+    $accountable = $_POST['accountable'];
     $id = $_GET['client_id'];
 
         $sql = "UPDATE tbl_client SET 
@@ -61,7 +64,8 @@ if (isset($_POST['btnEditClient'])) {
         gender='$gender', 
         address='$address', 
         birthdate='$birthdate',
-        requirements = '$requirements'
+        requirements = '$requirements',
+        accountable = '$accountable'
         WHERE 
         id='$id'";
     
@@ -213,6 +217,27 @@ if (isset($_POST['btnAddBudget'])) {
         }
         $conn->close();
 
+}
+
+if (isset($_POST['btnEditBudget'])) {
+    $amount = $_POST['amount'];
+    $date = $_POST['date'];
+    $client_id = $_GET['id'];
+    $budget_id = $_GET['budget_id'];
+
+
+        $sql = "UPDATE budget_history SET 
+        amount='$amount', 
+        date='$date'
+        WHERE 
+        id='$budget_id'";
+    
+    if ($conn->query($sql) === TRUE) {
+        updateBalance($conn, $id);
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+    
 }
 
 function updateBalance($conn, $id){

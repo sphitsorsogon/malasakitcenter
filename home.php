@@ -42,6 +42,7 @@ if (isset($_SESSION['loggedin'])) {
     </style>
     <!-- Custom styles for this template -->
     <link href="./assets/css/bootstrap.min2.css" rel="stylesheet">
+    <link href="./assets/css/style.css" rel="stylesheet">
   </head>
   <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -76,6 +77,7 @@ if (isset($_SESSION['loggedin'])) {
                 </div>
                     <form action="action.php?id=<?php echo $_GET['id'] ?>" method="POST">
                         <div class="row">
+                        <input name="accountable" type="hidden" class="form-control" value="<?php echo $_SESSION['user_fullname'] ?>">
                             <div class="col-4">
                                 <div class="form-group">
                                     <input name="fullname" type="text" class="form-control" placeholder="Enter Fullname">
@@ -147,8 +149,9 @@ if (isset($_SESSION['loggedin'])) {
                 ?>
             </h2>
         </div>  
-
-            <div class="container-fluid mt-3">
+        <!-- <button class="btn btn-md btn-outline-secondary" id="btnTable" onclick="myFunction()">Show Client</button> -->
+        <input class="btn btn-md btn-outline-secondary" type="button" id="btnTable"  onclick="myFunction()">
+            <div class="container-fluid mt-3" id="myDIV">
                 <div class="row">
                         <div class="col-md-12 border border-info">
                             <div class="table-responsive">
@@ -165,6 +168,7 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Requirements</th>
                                         <th>Liquidation Status</th>
                                         <th>Patient Status</th>
+                                        <th>Accountable</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -172,6 +176,121 @@ if (isset($_SESSION['loggedin'])) {
 
                                 <?php
                                 $sql = "SELECT * FROM tbl_client ORDER BY id desc";
+                                    $result = mysqli_query($conn, $sql);
+                                    if (mysqli_num_rows($result) > 0) {
+
+                                        $total_client = mysqli_num_rows($result) ;
+
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $id = $row['id'];
+                                            $fullname = $row['fullname'];
+                                            $age = $row['age'];
+                                            $gender = $row['gender'];
+                                            $address = $row['address']; 
+                                            $birthdate = $row['birthdate'];
+                                            $requirements = $row['requirements'];
+                                            $patient_status = $row['patient_status'];
+                                            $beneficiary_name = $row['fullname_client'];
+                                            $accountable = $row['accountable'];
+
+                                            $sql2 = "SELECT SUM(amount) as balance FROM listofavailment WHERE client_id = $id && status != 'Complete' ";
+                                                $result2 = mysqli_query($conn, $sql2);
+                                                if (mysqli_num_rows($result2) > 0) {
+                                                    while ($row2 = mysqli_fetch_assoc($result2)) {
+                                                    $balance = $row2['balance'];
+                                                    $total =  2000 - $balance;
+                                                    }
+                                                }
+                                            // $sql2 = "SELECT COUNT(client_id) as transaction_count FROM listofavailment WHERE client_id = $id && `status` != 'Complete'";
+                                            // $result2 = mysqli_query($conn, $sql2);
+                                            // if (mysqli_num_rows($result2) > 0) {
+                                            //     while ($row2 = mysqli_fetch_assoc($result2)) {
+                                            //       $count = $row2['transaction_count'];
+                                            //     }
+                                            //   }
+
+                                            echo '
+                                                <tr>
+                                                    <td>' . $id . '</td>
+                                                    <td>' . $fullname . '</td>
+                                                    <td>' . $beneficiary_name . '</td>
+                                                    <td>' . $age . '</td>
+                                                    <td>' . $gender . '</td>
+                                                    <td>' . $address . '</td>
+                                                    <td>' . $birthdate . '</td>
+                                                    <td>' . $requirements . '</td>
+                                                    <td>';
+                                                    if($total <= 0){
+                                                        echo 'Ready to Liquidate';
+                                                    } else {
+                                                        echo 'Active';
+                                                    }
+                                                    echo' 
+                                                    </td>
+                                                    <td>' . $patient_status . '</td>
+                                                    <td>' . $accountable . '</td>
+                                                    <td align="center">
+                                                        <a href="addAvailment.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="eye"></span> View</a>
+                                                        <a href="editClient.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
+                                                    </td>
+                                                </tr>
+                                                ';
+                                                // Delete Client
+                                                // <a href="action.php?id='.$_GET['id'].'&client_id='.$id.'&delete=true" class="btn btn-md btn-outline-secondary"><span data-feather="trash"></span> Delete</a>
+
+                                        }
+                                    }
+                                    ?>
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Patient Name</th>
+                                        <th>Client Name</th>
+                                        <th>Age</th>
+                                        <th>Gender</th>
+                                        <th>Address</th>
+                                        <th>Birthdate</th>
+                                        <th>Requirements</th>
+                                        <th>Liquidation Status</th>
+                                        <th>Patient Status</th>
+                                        <th>Accountable</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>                           
+            </div>
+
+
+
+            <div class="container-fluid mt-3" id="myDIV2">
+                <div class="row">
+                        <div class="col-md-12 border border-info">
+                            <div class="table-responsive">
+                            <table id="example2" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Patient Name</th>
+                                        <th>Client Name</th>
+                                        <th>Age</th>
+                                        <th>Gender</th>
+                                        <th>Address</th>
+                                        <th>Birthdate</th>
+                                        <th>Requirements</th>
+                                        <th>Liquidation Status</th>
+                                        <th>Patient Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $current_user = $_SESSION['user_fullname'];
+                                $sql = "SELECT * FROM tbl_client WHERE accountable='$current_user' ORDER BY id desc";
                                     $result = mysqli_query($conn, $sql);
                                     if (mysqli_num_rows($result) > 0) {
 
@@ -196,13 +315,7 @@ if (isset($_SESSION['loggedin'])) {
                                                     $total =  2000 - $balance;
                                                     }
                                                 }
-                                            // $sql2 = "SELECT COUNT(client_id) as transaction_count FROM listofavailment WHERE client_id = $id && `status` != 'Complete'";
-                                            // $result2 = mysqli_query($conn, $sql2);
-                                            // if (mysqli_num_rows($result2) > 0) {
-                                            //     while ($row2 = mysqli_fetch_assoc($result2)) {
-                                            //       $count = $row2['transaction_count'];
-                                            //     }
-                                            //   }
+                                     
 
                                             echo '
                                                 <tr>
@@ -263,7 +376,7 @@ if (isset($_SESSION['loggedin'])) {
     </main>
   </div>
 </div>
-
+<p class="mt-5 mb-3 text-muted text-center">&copy; <a href="https://www.facebook.com/kennethlimsolomon/">Kenneth Solomon</a></p>
         <script src="./assets/js/jquery-3.5.1.slim.min.js"></script>
         <script>window.jQuery || document.write('<script src="/docs/4.5/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="./assets/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
         <script src="./assets/js/feather.min.js"></script>
@@ -275,7 +388,24 @@ if (isset($_SESSION['loggedin'])) {
         <script src="./assets/js/jquery.dataTables.min.js"></script>
         <script src="./assets/js/dataTables.bootstrap4.min.js"></script>
         <script type="text/javascript">
+
+                function myFunction() {
+                    var x = document.getElementById("myDIV");
+                    var x2 = document.getElementById("myDIV2");
+                    var btnlabel = document.getElementById("btnTable");
+                    if (x.style.display === "none") {
+                        x2.style.display = "none";
+                        x.style.display = "block";
+                        btnlabel.value = "Show Client";
+                    } else {
+                        x2.style.display = "block";
+                        x.style.display = "none";
+                        btnlabel.value = "Show All";
+                    }
+                }
             $(document).ready(function() {
+                var btnlabel = document.getElementById("btnTable").value = "Show Client";
+
                 $('#example').DataTable( {
                     initComplete: function () {
                         this.api().columns().every( function () {
@@ -298,7 +428,34 @@ if (isset($_SESSION['loggedin'])) {
                         } );
                     }
                 } );
+                $('#example2').DataTable( {
+                    initComplete: function () {
+                        this.api().columns().every( function () {
+                            var column = this;
+                            var select = $('<select class="form-control"><option value=""></option></select>')
+                                .appendTo( $(column.footer()).empty() )
+                                .on( 'change', function () {
+                                    var val = $.fn.dataTable.util.escapeRegex(
+                                        $(this).val()
+                                    );
+                
+                                    column
+                                        .search( val ? '^'+val+'$' : '', true, false )
+                                        .draw();
+                                } );
+                
+                            column.data().unique().sort().each( function ( d, j ) {
+                                select.append( '<option value="'+d+'">'+d+'</option>' )
+                            } );
+                        } );
+                    }
+                } );
+            
+                
+            
             } );
+
+            
         </script>
     </body>
 </html>

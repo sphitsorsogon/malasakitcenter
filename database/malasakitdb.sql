@@ -23,11 +23,11 @@ CREATE TABLE IF NOT EXISTS `budget` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table malasakitdb.budget: ~0 rows (approximately)
+-- Dumping data for table malasakitdb.budget: ~1 rows (approximately)
 DELETE FROM `budget`;
 /*!40000 ALTER TABLE `budget` DISABLE KEYS */;
 INSERT INTO `budget` (`id`, `amount`) VALUES
-	(1, 17600);
+	(1, 0);
 /*!40000 ALTER TABLE `budget` ENABLE KEYS */;
 
 -- Dumping structure for table malasakitdb.budget_history
@@ -36,13 +36,11 @@ CREATE TABLE IF NOT EXISTS `budget_history` (
   `amount` int(12) unsigned NOT NULL DEFAULT '0',
   `date` varchar(50) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table malasakitdb.budget_history: ~0 rows (approximately)
 DELETE FROM `budget_history`;
 /*!40000 ALTER TABLE `budget_history` DISABLE KEYS */;
-INSERT INTO `budget_history` (`id`, `amount`, `date`) VALUES
-	(1, 20000, '2020-11-16');
 /*!40000 ALTER TABLE `budget_history` ENABLE KEYS */;
 
 -- Dumping structure for table malasakitdb.listofavailment
@@ -58,16 +56,11 @@ CREATE TABLE IF NOT EXISTS `listofavailment` (
   `dateofavailment` varchar(50) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table malasakitdb.listofavailment: ~4 rows (approximately)
+-- Dumping data for table malasakitdb.listofavailment: ~0 rows (approximately)
 DELETE FROM `listofavailment`;
 /*!40000 ALTER TABLE `listofavailment` DISABLE KEYS */;
-INSERT INTO `listofavailment` (`id`, `client_id`, `user`, `admissiondate`, `amount`, `purpose`, `remarks`, `firstavailment`, `dateofavailment`, `status`) VALUES
-	(1, 1, 'Admin', '2020-11-16', '150', 'medical assistance', '', 'mc', '2020-11-16', ''),
-	(2, 1, 'Kenneth Solomon', '2020-11-16', '220', 'wew', '', 'mc', '2020-11-16', ''),
-	(3, 1, 'Admin', '2020-11-19', '1030', 'MED ASSISTANCE', '', '', '2020-12-07', ''),
-	(4, 1, 'Admin', '2020-11-16', '1000', 'test', 'asdkj', 'askdja', '19923-12-07', '');
 /*!40000 ALTER TABLE `listofavailment` ENABLE KEYS */;
 
 -- Dumping structure for view malasakitdb.remaining_balance
@@ -87,16 +80,13 @@ CREATE TABLE IF NOT EXISTS `tbl_client` (
   `birthdate` varchar(50) NOT NULL,
   `requirements` varchar(255) NOT NULL,
   `patient_status` varchar(50) DEFAULT NULL,
+  `accountable` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table malasakitdb.tbl_client: ~2 rows (approximately)
+-- Dumping data for table malasakitdb.tbl_client: ~0 rows (approximately)
 DELETE FROM `tbl_client`;
 /*!40000 ALTER TABLE `tbl_client` DISABLE KEYS */;
-INSERT INTO `tbl_client` (`id`, `fullname`, `fullname_client`, `age`, `gender`, `address`, `birthdate`, `requirements`, `patient_status`) VALUES
-	(1, 'Kenneth', 'Renz', 26, 'Male', 'Seabreeze', '1997-12-07', 'VALID ID, MED CERT, DERT INDIGENCY', 'Discharged'),
-	(2, 'Solomon', 'Renz', 22, 'Female', 'Cabid-an', '1995-12-08', 'VALID ID, MEDICAL CERTIFICATE, CERTIFICATE OF INDIGENCY', NULL),
-	(3, 'Lim', 'Solomon', 23, 'Female', 'Seabreeze Cabid-an', '2838-12-07', 'VALID ID, MEDICAL CERTIFICATE, CERTIFICATE OF INDIGENCY', NULL);
 /*!40000 ALTER TABLE `tbl_client` ENABLE KEYS */;
 
 -- Dumping structure for table malasakitdb.user
@@ -107,9 +97,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_fullname` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
--- Dumping data for table malasakitdb.user: ~16 rows (approximately)
+-- Dumping data for table malasakitdb.user: ~19 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `password`, `user_fullname`) VALUES
@@ -129,7 +119,9 @@ INSERT INTO `user` (`id`, `username`, `password`, `user_fullname`) VALUES
 	(14, 'monette', '*963.', 'Monette L. Merciales'),
 	(15, 'mcdaplin', '1208', 'Maria Conception'),
 	(16, 'eals', '0329', 'Rosalle Tereen Maie V. Donor'),
-	(17, 'rona', '*1423', 'Ronarie S. Saja');
+	(17, 'rona', '*1423', 'Ronarie S. Saja'),
+	(18, 'jjacob', '*1437', 'Jean L. Jacob'),
+	(19, 'cafuentes', '15784268953', 'Camille Ann G. Fuentes');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 -- Dumping structure for view malasakitdb.view_clientinfo

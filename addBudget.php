@@ -109,8 +109,9 @@ if (isset($_SESSION['loggedin'])) {
                                     $result = mysqli_query($conn, $sql);
                                     if (mysqli_num_rows($result) > 0) {
                                         while ($row = mysqli_fetch_assoc($result)) {
-                                            $id = $_GET['id'];
+                                            $client_id = $_GET['id'];
                                             $amount = $row['amount'];
+                                            $budget_id = $row['id'];
                                             $date = $row['date'];
                                             
                                             echo '
@@ -118,8 +119,7 @@ if (isset($_SESSION['loggedin'])) {
                                                     <td>' . $amount . '</td>
                                                     <td>' . $date . '</td>
                                                     <td align="center">
-                                                        <a href="addAvailment.php?id='.$_GET['id'].'" class="btn btn-md btn-outline-secondary"><span data-feather="eye"></span> View</a>
-                                                        <a href="editClient.php?id='.$_GET['id'].'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
+                                                        <a href="editBudget.php?id='.$_GET['id'].'&budget_id='.$budget_id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
                                                     </td>
                                                 </tr>
                                                 ';

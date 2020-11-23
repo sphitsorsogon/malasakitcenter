@@ -65,84 +65,37 @@ if (isset($_SESSION['loggedin'])) {
       </div>
 
     <?php
-    $client_id=$_GET['client_id'];
-       $sql = "SELECT * FROM tbl_client WHERE id = $client_id";
+    $client_id=$_GET['id'];
+    $budget_id=$_GET['budget_id'];
+       $sql = "SELECT * FROM budget_history WHERE id = $budget_id";
            $result = mysqli_query($conn, $sql);
            if (mysqli_num_rows($result) > 0) {
                while ($row = mysqli_fetch_assoc($result)) {
-                   $id = $row['id'];
-                   $fullname = $row['fullname'];
-                   $age = $row['age'];
-                   $gender = $row['gender'];
-                   $address = $row['address'];
-                   $birthdate = $row['birthdate'];
-                   $requirements = $row['requirements'];
-                   $patient_status = $row['patient_status'];
-                   $fullname_client = $row['fullname_client'];
+                $amount = $row['amount'];
+                $date = $row['date'];
                }
            }
     ?>
 
             <div class="container">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
-                    <h1 class="h2">Edit Client</h1>
+                    <h1 class="h2">Edit Budget</h1>
                 </div>
-                    <form action="action.php?id=<?php echo $_GET['id'] ?>&client_id=<?php echo $_GET['client_id'] ?>" method="POST">
-                        <div class="row">
-                            <div class="col-4">
-                                <input name="accountable" type="hidden" class="form-control" value="<?php echo $_SESSION['user_fullname'] ?>">
-                                <div class="form-group">
-                                    <input name="fullname" type="text" class="form-control" placeholder="Enter Fullname" value="<?php echo $fullname ?>">
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <input name="fullname_client" type="text" class="form-control" placeholder="Enter Beneficiary Name" value="<?php echo $fullname_client ?>">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="form-group">
-                                    <input name="age" type="text" class="form-control" placeholder="Enter age" value="<?php echo $age ?>">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="form-group">
-                                    <select class="form-control" name="gender" value="<?php echo $gender ?>">
-                                        <option value="<?php echo $gender ?>"><?php echo $gender ?></option>
-                                        <option value=""></option>
-                                        <option value="Female">Female</option>
-                                        <option value="Male">Male</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <input name="address" type="text" class="form-control" placeholder="Enter Address" value="<?php echo $address ?>">
-                                </div>
-                            </div>
-                        </div>
+                    <form action="action.php?id=<?php echo $client_id ?>&budget_id=<?php echo $budget_id ?>" method="POST">
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <input name="birthdate" type="date" class="form-control" placeholder="Enter Birthdate" value="<?php echo $birthdate ?>">
+                                    <input name="amount" type="text" class="form-control" value="<?php echo $amount ?>">
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
-                                    <input name="requirements" type="text" class="form-control" placeholder="Enter Requirements" value="<?php echo $requirements ?>">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="form-group">
-                                    <select class="form-control" name="patient_status" value="<?php echo $patient_status ?>">
-                                        <option value="<?php echo $patient_status ?>"><?php echo $patient_status ?></option>
-                                        <option value=""></option>
-                                        <option value="Discharged">Discharged</option>
-                                    </select>
+                                    <input name="date" type="date" class="form-control" value="<?php echo $date ?>">
                                 </div>
                             </div>
                         </div>
-                        <button name="btnEditClient" type="submit" class="btn btn-primary">Edit Client</button>
+                        
+                        <button name="btnEditBudget" type="submit" class="btn btn-primary">Edit Budget</button>
                     </form>
             </div>
     </main>
