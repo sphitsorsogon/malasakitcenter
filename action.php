@@ -4,8 +4,8 @@ session_start();
 include_once './connection.php';
 
 if (isset($_POST['btnAddClient'])) {
-    $fullname = $_POST['fullname'];
-    $beneficiary_name = $_POST['fullname_client'];
+    $fullname_f = strtoupper($fullname = $_POST['fullname']);
+    $beneficiary_name_f = strtoupper($beneficiary_name = $_POST['fullname_client']);
     $age = $_POST['age'];
     $gender = $_POST['gender'];
     $address = $_POST['address'];
@@ -22,8 +22,8 @@ if (isset($_POST['btnAddClient'])) {
         requirements,
         accountable
         ) VALUES (
-        '$fullname',
-        '$beneficiary_name',
+        '$fullname_f',
+        '$beneficiary_name_f',
         '$age',
         '$gender',
         '$address',
@@ -199,14 +199,17 @@ if (isset($_POST['btnEditAvailment'])) {
 }
 
 if (isset($_POST['btnAddBudget'])) {
+    $accountable = $_POST['accountable'];
     $amount = $_POST['amount'];
     $date = $_POST['budget_date'];
     $id = $_GET['id'];
 
     $sql = "INSERT INTO budget_history(
+        accountable,
         amount,
         date
         ) VALUES (
+        '$accountable',
         '$amount',
         '$date'
         )";
@@ -220,6 +223,7 @@ if (isset($_POST['btnAddBudget'])) {
 }
 
 if (isset($_POST['btnEditBudget'])) {
+    $accountable = $_POST['accountable'];
     $amount = $_POST['amount'];
     $date = $_POST['date'];
     $client_id = $_GET['id'];
@@ -227,13 +231,14 @@ if (isset($_POST['btnEditBudget'])) {
 
 
         $sql = "UPDATE budget_history SET 
+        accountable='$accountable', 
         amount='$amount', 
         date='$date'
         WHERE 
         id='$budget_id'";
     
     if ($conn->query($sql) === TRUE) {
-        updateBalance($conn, $id);
+        updateBalance($conn, $client_id);
     } else {
         echo "Error updating record: " . $conn->error;
     }

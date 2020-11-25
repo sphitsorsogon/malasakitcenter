@@ -72,6 +72,7 @@ if (isset($_SESSION['loggedin'])) {
                 </div>
                     <form action="action.php?id=<?php echo $_GET['id'] ?>" method="POST">
                         <div class="row">
+                        <input name="accountable" type="hidden" class="form-control" value="<?php echo $_SESSION['user_fullname'] ?>">
                             <div class="col-6">
                                 <div class="form-group">
                                 Date:
@@ -99,6 +100,7 @@ if (isset($_SESSION['loggedin'])) {
                                     <tr>
                                         <th>Amount</th>
                                         <th>Date</th>
+                                        <th>Accountable</th>
                                         
                                     </tr>
                                 </thead>
@@ -111,13 +113,15 @@ if (isset($_SESSION['loggedin'])) {
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             $client_id = $_GET['id'];
                                             $amount = $row['amount'];
+                                            $accountable = $row['accountable'];
                                             $budget_id = $row['id'];
                                             $date = $row['date'];
                                             
                                             echo '
                                                 <tr>
-                                                    <td>' . $amount . '</td>
+                                                    <td>' . number_format($amount, 2) . '</td>
                                                     <td>' . $date . '</td>
+                                                    <td>' . $accountable . '</td>
                                                     <td align="center">
                                                         <a href="editBudget.php?id='.$_GET['id'].'&budget_id='.$budget_id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
                                                     </td>
@@ -135,6 +139,7 @@ if (isset($_SESSION['loggedin'])) {
                                     <tr>
                                         <th>Amount</th>
                                         <th>Date</th>
+                                        <th>Accountable</th>
                                         
                                     </tr>
                                 </tfoot>

@@ -85,6 +85,7 @@ if (isset($_SESSION['loggedin'])) {
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-group">
+                                <input name="accountable" type="hidden" class="form-control" value="<?php echo $_SESSION['user_fullname'] ?>">
                                     <input name="amount" type="text" class="form-control" value="<?php echo $amount ?>">
                                 </div>
                             </div>
