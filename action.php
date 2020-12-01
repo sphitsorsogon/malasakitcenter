@@ -136,7 +136,7 @@ if (isset($_POST['btnAddAvailment'])) {
 
         if (mysqli_query($conn, $sql)) {
                 $sql = "UPDATE tbl_client SET 
-                client_admissiondate='$admission_date'
+                client_admission='$admission_date'
                 WHERE 
                 id='$client_id'";
             if ($conn->query($sql) === TRUE) {
@@ -170,7 +170,6 @@ if (isset($_GET['deleteavailment'])) {
 if (isset($_POST['btnEditAvailment'])) {
     $admission_date = $_POST['admissiondate'];
     $amount = $_POST['amount'];
-    // $requirements = $_POST['requirements'];
     $purpose = $_POST['purpose'];
     $remarks = $_POST['remarks'];
     $firstavailment = $_POST['firstavailment'];
@@ -184,7 +183,6 @@ if (isset($_POST['btnEditAvailment'])) {
         $sql = "UPDATE listofavailment SET 
         admissiondate='$admission_date', 
         amount='$amount', 
-        -- requirements='$requirements', 
         purpose='$purpose', 
         remarks='$remarks',
         firstavailment='$firstavailment', 
