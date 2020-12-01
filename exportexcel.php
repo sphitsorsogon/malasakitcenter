@@ -49,8 +49,8 @@ $user_id = $_GET['id'];
 
 $sql = "SELECT a.*,
 (SELECT GROUP_CONCAT(purpose SEPARATOR ', ') FROM listofavailment WHERE client_id = a.id GROUP BY client_id) AS purposes, 
-(SELECT SUM(amount) FROM listofavailment WHERE client_id = a.id AND `status` != 'Complete' GROUP BY b.admissiondate) AS amount
-FROM tbl_client a where patient_status = 'Discharged'";
+(SELECT SUM(amount) FROM listofavailment WHERE client_id = a.id AND `status` != 'Complete' GROUP BY admissiondate) AS amount
+FROM tbl_client a where patient_status = 'Discharged' LIMIT 30";
     $result = mysqli_query($conn, $sql);
 
     $fullname = array();
@@ -82,10 +82,10 @@ FROM tbl_client a where patient_status = 'Discharged'";
 
 
         if($patient_status = 'Discharged'){
-            $sql5 = "UPDATE tbl_client SET 
-            patient_status=''
-            WHERE 
-            id='$client_id'";
+            // $sql5 = "UPDATE tbl_client SET 
+            // patient_status=''
+            // WHERE 
+            // id='$client_id'";
                 $sql3 = "SELECT * FROM listofavailment WHERE client_id = $client_id && status != 'Complete' ";
                 $result3 = mysqli_query($conn, $sql3);
                 if (mysqli_num_rows($result3) > 0) {
@@ -104,8 +104,21 @@ FROM tbl_client a where patient_status = 'Discharged'";
 
                 }
         }
-
-        PhpExcelTemplator::saveToFile('./template.xlsx', './exported_file.xlsx', [
+        $exportDate = date('d-m-Y');
+        PhpExcelTemplator::saveToFile('./template.xlsx', './Reports/reports-'.$exportDate.'.xlsx', [
+            '[fullname_client]' => $fullname_client,
+            '[fullname]' => $fullname,
+            '[age]' => $age,
+            '[gender]' => $gender,
+            '[address]' => $address,
+            '[birthdate]' => $birthdate,
+            '[requirements]' => $requirements,
+            '[patient_status]' => $patient_status,
+            '[purposes]' => $purposes,
+            '[amount]' => $amount,
+            '[admissiondate]' => $admissiondate,
+        ]);
+        PhpExcelTemplator::saveToFile('./template.xlsx', './backup-reports/reports-'.$exportDate.'.xlsx', [
             '[fullname_client]' => $fullname_client,
             '[fullname]' => $fullname,
             '[age]' => $age,
@@ -123,7 +136,7 @@ FROM tbl_client a where patient_status = 'Discharged'";
         
     }
 
-$sql5 = "UPDATE tbl_client SET patient_status='' WHERE patient_status='Discharged'";
+$sql5 = "UPDATE tbl_client SET patient_status='', accountable='', requirements='' WHERE patient_status='Discharged'";
     if ($conn->query($sql5)) {
         $user_id = $_GET['id'];
         $url = "./home.php?id=$user_id";
