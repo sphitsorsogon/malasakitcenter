@@ -126,17 +126,15 @@ if (isset($_SESSION['loggedin'])) {
                                     <input name="dateofavailment" type="date" class="form-control" placeholder="Enter Date of Availment">
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <!-- <div class="col-2">
                                 <div class="form-group">
                                 Status:
                                     <select class="form-control" name="status">
                                         <option value=""></option>
-                                        <!-- <option value="Liquidated">Liquidated</option>
-                                        <option value="Discharged">Discharged</option> -->
                                         <option value="Complete">Complete</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <!-- Hidden Fill up Form -->

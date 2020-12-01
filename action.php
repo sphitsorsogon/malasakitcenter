@@ -64,8 +64,7 @@ if (isset($_POST['btnEditClient'])) {
         gender='$gender', 
         address='$address', 
         birthdate='$birthdate',
-        requirements = '$requirements',
-        accountable = '$accountable'
+        requirements = '$requirements'
         WHERE 
         id='$id'";
     
