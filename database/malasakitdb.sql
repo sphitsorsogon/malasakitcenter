@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `budget` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table malasakitdb.budget: ~1 rows (approximately)
+-- Dumping data for table malasakitdb.budget: ~0 rows (approximately)
 DELETE FROM `budget`;
 /*!40000 ALTER TABLE `budget` DISABLE KEYS */;
 INSERT INTO `budget` (`id`, `amount`) VALUES
@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `budget_history` (
   `id` int(12) unsigned NOT NULL AUTO_INCREMENT,
   `amount` int(12) unsigned NOT NULL DEFAULT '0',
   `date` varchar(50) NOT NULL DEFAULT '0',
+  `accountable` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -76,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `tbl_client` (
   `fullname_client` varchar(255) NOT NULL,
   `age` int(12) NOT NULL,
   `gender` varchar(50) NOT NULL,
+  `client_admissiondate` varchar(50) NOT NULL,
   `address` varchar(50) NOT NULL,
   `birthdate` varchar(50) NOT NULL,
   `requirements` varchar(255) NOT NULL,
@@ -99,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
--- Dumping data for table malasakitdb.user: ~19 rows (approximately)
+-- Dumping data for table malasakitdb.user: ~16 rows (approximately)
 DELETE FROM `user`;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `password`, `user_fullname`) VALUES
