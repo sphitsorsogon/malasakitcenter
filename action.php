@@ -103,7 +103,6 @@ if (isset($_GET['deleteclient'])) {
 if (isset($_POST['btnAddAvailment'])) {
     $admission_date = $_POST['admissiondate'];
     $amount = $_POST['amount'];
-    // $requirements = $_POST['requirements'];
     $purpose = $_POST['purpose'];
     $remarks = $_POST['remarks'];
     $firstavailment = $_POST['firstavailment'];
@@ -117,7 +116,6 @@ if (isset($_POST['btnAddAvailment'])) {
         client_id,
         admissiondate,
         amount,
-        -- requirements,
         purpose,
         remarks,
         firstavailment,
@@ -128,7 +126,6 @@ if (isset($_POST['btnAddAvailment'])) {
         '$client_id',
         '$admission_date',
         '$amount',
-        -- '$requirements',
         '$purpose',
         '$remarks',
         '$firstavailment',
@@ -138,7 +135,15 @@ if (isset($_POST['btnAddAvailment'])) {
         )";
 
         if (mysqli_query($conn, $sql)) {
-            updateBalance($conn, $id);
+                $sql = "UPDATE tbl_client SET 
+                client_admissiondate='$admission_date'
+                WHERE 
+                id='$client_id'";
+            if ($conn->query($sql) === TRUE) {
+                updateBalance($conn, $id);
+            } else {
+                echo "Error updating record: " . $conn->error;
+            }
         } else {
             echo "Error: " . $sql . "" . mysqli_error($conn);
         }
@@ -191,7 +196,15 @@ if (isset($_POST['btnEditAvailment'])) {
     
 
     if ($conn->query($sql) === TRUE) {
-        updateBalance($conn, $id);
+            $sql = "UPDATE tbl_client SET 
+            client_admission='$admission_date'
+            WHERE 
+            id='$id'";
+        if ($conn->query($sql) === TRUE) {
+            updateBalance($conn, $id);
+        } else {
+            echo "Error updating record: " . $conn->error;
+        }
     } else {
         echo "Error updating record: " . $conn->error;
     }
@@ -228,7 +241,6 @@ if (isset($_POST['btnEditBudget'])) {
     $date = $_POST['date'];
     $client_id = $_GET['id'];
     $budget_id = $_GET['budget_id'];
-
 
         $sql = "UPDATE budget_history SET 
         accountable='$accountable', 

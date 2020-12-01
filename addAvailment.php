@@ -73,6 +73,7 @@ if (isset($_SESSION['loggedin'])) {
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      
         <h1 class="h2">Dashboard - <?php echo $user_fullname ?></h1>
         <button  class="btn btn-md btn-outline-secondary" type="button" data-toggle="collapse" data-target="#newClientCollapse" aria-expanded="false" aria-controls="newClientCollapse">
             Add new Availment
@@ -157,9 +158,29 @@ if (isset($_SESSION['loggedin'])) {
         </div>
 
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <?php
+            $client_id = $_GET['client_id'];
+            
+            $sql = "SELECT SUM(amount) AS total FROM listofavailment WHERE client_id = $client_id AND status != 'Complete'  GROUP BY admissiondate";
+            $result = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $total_rendered = $row['total'];
+                }
+            } else{
+                $total_rendered = 0;
+            }
+        ?>
             <h1 class="h2"><?php 
             if(isset($client_name)){
-                echo $client_name;} ?></h1> - 
+                echo $client_name;} ?> - TOTAL: <?php 
+                    if($total_rendered == 0){
+                        echo "0";
+                    } else{
+                        echo number_format($total_rendered);
+                    }
+                ?></h1> 
+                
                 <h2 class="text-danger">
                     <?php
                     $client_id = $_GET['client_id'];
