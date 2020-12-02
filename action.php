@@ -3,6 +3,8 @@ session_start();
 
 include_once './connection.php';
 
+date_default_timezone_set("Asia/Manila");
+
 $currdate = date('m-d-Y h:ia');
 
 if (isset($_POST['btnAddClient'])) {
@@ -188,7 +190,7 @@ if (isset($_POST['btnAddAvailment'])) {
 
         if (mysqli_query($conn, $sql)) {
                 $sql = "UPDATE tbl_client SET 
-                client_admissiondate='$admission_date'
+                client_admission='$admission_date'
                 WHERE 
                 id='$client_id'";
             if ($conn->query($sql) === TRUE) {
@@ -291,7 +293,7 @@ if (isset($_POST['btnEditAvailment'])) {
         
         if(mysqli_query($conn, $sql2)){
             $sql = "UPDATE tbl_client SET 
-            client_admissiondate='$admission_date'
+            client_admission='$admission_date'
             WHERE 
             id='$id'";
             $sql3 = "INSERT INTO logs(date,action,user) VALUES ('$currdate','Update Admission Date of Patient with ID $id to $admission_date','$user_fullname')";

@@ -7,6 +7,8 @@ session_start();
 //for logs
 include_once './connection.php';
 
+date_default_timezone_set("Asia/Manila");
+
 $curruser = $_SESSION['user_fullname'];
 $currdate = date('m-d-Y h:ia');
 

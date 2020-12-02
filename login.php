@@ -3,6 +3,8 @@ session_start();
 
 include_once './connection.php';
 
+date_default_timezone_set("Asia/Manila");
+
 $username = $_POST['username'];
 $password = $_POST['password'];
 
