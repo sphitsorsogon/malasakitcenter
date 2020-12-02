@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `listofavailment` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
--- Dumping data for table malasakitdb.listofavailment: ~16 rows (approximately)
+-- Dumping data for table malasakitdb.listofavailment: ~12 rows (approximately)
 /*!40000 ALTER TABLE `listofavailment` DISABLE KEYS */;
 INSERT INTO `listofavailment` (`id`, `client_id`, `user`, `admissiondate`, `amount`, `purpose`, `remarks`, `firstavailment`, `dateofavailment`, `status`) VALUES
 	(1, 1, 'Hazel Martinez Recto', '2020-11-29', '6100.00', 'MEDICAL ASSISTANCE', 'REACH AMOUNT (HAZEL M. RECTO)', 'SOCIAL SERVICE', '2020-12-01', ''),
@@ -68,17 +68,26 @@ INSERT INTO `listofavailment` (`id`, `client_id`, `user`, `admissiondate`, `amou
 	(4, 4, 'Rosalle Tereen Maie V. Donor', '2020-11-29', '120', 'MEDICINES', 'CERTIFICATE OF INDIGENCY', 'SOCIAL SERVICE', '2020-12-01', ''),
 	(5, 5, 'Ronarie S. Saja', '2020-12-01', '3148.00', 'SUPPLIES', 'CERT. OF INDIGENCY (REACHED AMOUNT)', 'SOCIAL SERVICE', '2020-12-01', ''),
 	(6, 6, 'Joshua M. Resurreccion', '2020-11-27', '509', 'MEDICINES', '', 'SOCIAL SERVICE', '2020-12-01', ''),
-	(7, 7, 'Camille Ann G. Fuentes', '2020-12-02', '2100', 'MEDICAL ASSISTANCE', 'CERT INDIGENY/ CEDULA (CAMILLE ANN G. FUENTES)', 'SOCIAL SERVICE', '2020-12-02', 'Complete'),
 	(8, 8, 'Jean L. Jacob', '2020-11-30', '000', 'MEDICAL ASSISTANCE', 'CEDULA, CERTIFICATE OF INDIGENCY (JEAN L. JACOB)', 'SOCIAL SERVICE', '2020-12-02', ''),
-	(9, 9, 'Camille Ann G. Fuentes', '2020-12-02', '4258.00', 'MEDICINES AND SUPPLIES', 'CEDULA/INDIGENCY- REACHED AMOUNT (CAMILLE ANN G. FUENTES))', '', '2020-12-02', 'Complete'),
-	(10, 10, 'Camille Ann G. Fuentes', '2020-11-17', '2510.00', 'MEDICAL ASSISTANCE', 'CERTIFICATE OF INDIGENCY', 'SOCIAL SERVICE', '2020-12-02', 'Complete'),
-	(11, 9, 'Camille Ann G. Fuentes', '2020-12-02', '4258.00', 'MEDICINES AND SUPPLIES', 'INDIGENCY/ CEDULA (CAMILLE ANN G. FUENTES)', 'SOCIAL SERVICE', '2020-12-02', 'Complete'),
-	(12, 7, 'Camille Ann G. Fuentes', '2020-12-02', '2100', 'MEDICINES', 'BARANGAY INDIGENCY (CAMILLE ANN G. FUENTES)', 'SOCIAL SERVICE', '2020-12-02', 'Complete'),
-	(13, 9, 'Camille Ann G. Fuentes', '2020-12-02', '4258.00', 'MEDICINES AND SUPPLIES', 'INDIGENCY/ CEDULA (CAMILLE ANN G. FUENTES)', 'SOCIAL SERVICE', '2020-12-02', 'Complete'),
-	(14, 7, 'Camille Ann G. Fuentes', '2020-12-02', '2100', 'MEDICINES', 'BARANGAY INDIGENCY (CAMILLE ANN G. FUENTES)', 'SOCIAL SERVICE', '2020-12-02', 'Complete'),
-	(15, 9, 'Camille Ann G. Fuentes', '2020-12-02', '4253', 'MEDICINES AND SUPPLIES', 'INDIGENCY/ CEDULA (CAMILLE ANN G. FUENTES)', 'SOCIAL SERVICE', '2020-12-02', 'Complete'),
-	(16, 9, 'Camille Ann G. Fuentes', '2020-12-02', '4253.00', 'MEDICAL ASSISTANCE', 'INDIGENCY/CEDULA(CAMILLE ANN FUENTES)', 'SOCIAL SERVICE', '2020-12-02', 'Complete');
+	(10, 10, 'Camille Ann G. Fuentes', '2020-11-17', '2510.00', 'MEDICAL ASSISTANCE', 'CERTIFICATE OF INDIGENCY', 'SOCIAL SERVICE', '2020-12-02', ''),
+	(12, 7, 'Camille Ann G. Fuentes', '2020-12-02', '2100', 'MEDICINES', 'BARANGAY INDIGENCY (CAMILLE ANN G. FUENTES)', 'SOCIAL SERVICE', '2020-12-02', ''),
+	(16, 9, 'Camille Ann G. Fuentes', '2020-12-02', '4253.00', 'MEDICAL ASSISTANCE', 'INDIGENCY/CEDULA(CAMILLE ANN FUENTES)', 'SOCIAL SERVICE', '2020-12-02', '');
 /*!40000 ALTER TABLE `listofavailment` ENABLE KEYS */;
+
+-- Dumping structure for table malasakitdb.logs
+CREATE TABLE IF NOT EXISTS `logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` varchar(50) NOT NULL,
+  `action` varchar(255) NOT NULL,
+  `user` varchar(50) NOT NULL,
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table malasakitdb.logs: ~1 rows (approximately)
+/*!40000 ALTER TABLE `logs` DISABLE KEYS */;
+INSERT INTO `logs` (`id`, `date`, `action`, `user`) VALUES
+	(1, '12-02-2020 02:53am', 'Logged in', 'Admin');
+/*!40000 ALTER TABLE `logs` ENABLE KEYS */;
 
 -- Dumping structure for view malasakitdb.remaining_balance
 -- Creating temporary table to overcome VIEW dependency errors
@@ -102,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `tbl_client` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table malasakitdb.tbl_client: ~10 rows (approximately)
+-- Dumping data for table malasakitdb.tbl_client: ~8 rows (approximately)
 /*!40000 ALTER TABLE `tbl_client` DISABLE KEYS */;
 INSERT INTO `tbl_client` (`id`, `fullname`, `fullname_client`, `age`, `gender`, `client_admission`, `address`, `birthdate`, `requirements`, `patient_status`, `accountable`) VALUES
 	(1, 'LIWANAG, ANTONIO ACUIN', 'LIWANAG, CATHERINE ACUIN', 29, 'Male', '2020-11-29', 'BURABOD (POB.), SORSOGON CITY, SORSOGON', '1991-10-21', 'VALID ID,MEDICAL CERTIFICATE, CERTIFICATE OF INDIGENCY', '', 'Hazel Martinez Recto'),
@@ -125,9 +134,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_fullname` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
--- Dumping data for table malasakitdb.user: ~20 rows (approximately)
+-- Dumping data for table malasakitdb.user: ~19 rows (approximately)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id`, `username`, `password`, `user_fullname`) VALUES
 	(1, 'admin', 'admin', 'Admin'),
