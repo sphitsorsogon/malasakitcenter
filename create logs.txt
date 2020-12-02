@@ -1,0 +1,10 @@
+CREATE TABLE `logs` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`date` VARCHAR(50) NOT NULL,
+	`action` VARCHAR(255) NOT NULL,
+	`user` VARCHAR(50) NOT NULL,
+	INDEX `id` (`id`)
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+;

@@ -4,6 +4,16 @@
 // If you are using session_name("something"), don't forget it now!
 session_start();
 
+//for logs
+include_once './connection.php';
+
+$curruser = $_SESSION['user_fullname'];
+$currdate = date('m-d-Y h:ia');
+
+$sql = "INSERT INTO logs(date,action,user)VALUES('$currdate','Logged out','$curruser')";
+//for logs
+
+if(mysqli_query($conn, $sql)){
 // Unset all of the session variables.
 $_SESSION = array();
 
@@ -26,3 +36,4 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 header('location: ./index.php');
+}

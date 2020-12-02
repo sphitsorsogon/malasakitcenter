@@ -138,6 +138,13 @@ if (isset($_SESSION['loggedin'])) {
                         </div>
 
                         <!-- Hidden Fill up Form -->
+                        <!-- for logs -->
+                        <div class="col-2">
+                            <div class="form-group">
+                                <input name="client_name" type="hidden" class="form-control" placeholder="Enter Admission Date" value="<?php echo $client_name ?>">
+                            </div>
+                        </div>
+                        <!-- for logs -->
                         <div class="col-2">
                             <div class="form-group">
                                 <input name="client_id" type="hidden" class="form-control" placeholder="Enter Admission Date" value="<?php echo $client_id ?>">
