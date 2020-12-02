@@ -22,7 +22,7 @@
                         
                 ?>
             <?php
-              if($total_discharged >= 1){
+              if($total_discharged >= 25){
                 echo '
                 <a class="nav-link" href="./exportexcel.php?id='.$id.'">
                   <span data-feather="bar-chart-2"></span>

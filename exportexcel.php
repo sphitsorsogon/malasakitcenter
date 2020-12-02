@@ -50,7 +50,7 @@ $user_id = $_GET['id'];
 $sql = "SELECT a.*,
 (SELECT GROUP_CONCAT(purpose SEPARATOR ', ') FROM listofavailment WHERE client_id = a.id GROUP BY client_id) AS purposes, 
 (SELECT SUM(amount) FROM listofavailment WHERE client_id = a.id AND `status` != 'Complete' GROUP BY admissiondate) AS amount
-FROM tbl_client a where patient_status = 'Discharged' LIMIT 30";
+FROM tbl_client a where patient_status = 'Discharged' LIMIT 25";
     $result = mysqli_query($conn, $sql);
 
     $fullname = array();
