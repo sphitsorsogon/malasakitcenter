@@ -189,6 +189,9 @@ if (isset($_POST['btnAddAvailment'])) {
         )";
 
         if (mysqli_query($conn, $sql)) {
+            $sql3 = "INSERT INTO logs(date,action,user) VALUES ('$currdate','Update Admission Date of Patient with ID $id to $admission_date','$user_fullname')";
+            mysqli_query($conn, $sql3);
+
                 $sql = "UPDATE tbl_client SET 
                 client_admission='$admission_date'
                 WHERE 

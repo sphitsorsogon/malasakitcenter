@@ -176,7 +176,7 @@ if (isset($_SESSION['loggedin'])) {
                 $total_rendered = 0;
             }
         ?>
-            <h1 class="h2"><?php 
+            <h4 class="h4"><?php 
             if(isset($client_name)){
                 echo $client_name;} ?> - TOTAL: <?php 
                     if($total_rendered == 0){
@@ -184,8 +184,7 @@ if (isset($_SESSION['loggedin'])) {
                     } else{
                         echo number_format($total_rendered);
                     }
-                ?></h1> 
-                
+                ?></h4> 
                 <h2 class="text-danger">
                     <?php
                     $client_id = $_GET['client_id'];
@@ -201,6 +200,20 @@ if (isset($_SESSION['loggedin'])) {
                     ?>
                 </h2>
         </div>  
+<h4>
+<?php
+$client_id = $_GET['client_id'];
+$sql = "SELECT admissiondate FROM listofavailment WHERE client_id = $client_id ORDER BY admissiondate DESC LIMIT 1";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+       $lastadmission = $row['admissiondate'];
+        echo 'Last Admission: ' . $lastadmission;
+        }
+    }
+?>
+
+</h4>
        
 
             <div class="container-fluid mt-3">
