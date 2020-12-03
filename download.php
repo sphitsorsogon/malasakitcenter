@@ -11,6 +11,11 @@ if (file_exists($file)) {
     header('Content-Length: ' . filesize($file));
     readfile($file);
     exit;
+} else {
+    $id = $_GET['id'];
+    $url = "./home.php?id=$id";
+    $url = str_replace(PHP_EOL, '', $url);
+    header("Location: $url");
 }
 
 

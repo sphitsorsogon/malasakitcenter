@@ -126,7 +126,7 @@ $file = 'Reports/'.$filename.'';
     echo '
     
     <tr>
-        <td> <a href="download.php?file='.$file.'">'.$filename.'</a>  </td>
+        <td> <a href="download.php?id='.$_GET['id'].'&file='.$file.'">'.$filename.'</a>  </td>
         <td> '.$date.' </td>
     </tr>
 
