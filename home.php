@@ -168,7 +168,7 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Requirements</th>
                                         <th>Liquidation Status</th>
                                         <th>Patient Status</th>
-                                        <th>Last Availment</th>
+                                        <th>First Availment</th>
                                         <th>Accountable</th>
                                         <th>Action</th>
                                     </tr>
@@ -271,7 +271,7 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Requirements</th>
                                         <th>Liquidation Status</th>
                                         <th>Patient Status</th>
-                                        <th>Last Availment</th>
+                                        <th>First Availment</th>
                                         <th>Accountable</th>
                                         <th>Action</th>
                                     </tr>
@@ -301,6 +301,8 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Requirements</th>
                                         <th>Liquidation Status</th>
                                         <th>Patient Status</th>
+                                        <th>First Availment</th>
+                                        <th>Accountable</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -323,6 +325,7 @@ if (isset($_SESSION['loggedin'])) {
                                             $requirements = $row['requirements'];
                                             $patient_status = $row['patient_status'];
                                             $beneficiary_name = $row['fullname_client'];
+                                            $last_availment = $row['last_availment'];
 
                                             $sql2 = "SELECT SUM(amount) as balance FROM listofavailment WHERE client_id = $id && status != 'Complete' ";
                                                 $result2 = mysqli_query($conn, $sql2);
@@ -334,7 +337,7 @@ if (isset($_SESSION['loggedin'])) {
                                                 }
                                      
 
-                                            echo '
+                                                echo '
                                                 <tr>
                                                     <td>' . $id . '</td>
                                                     <td>' . $fullname . '</td>
@@ -353,15 +356,26 @@ if (isset($_SESSION['loggedin'])) {
                                                     echo' 
                                                     </td>
                                                     <td>' . $patient_status . '</td>
-                                                    <td align="center">
+                                                    <td>' . $last_availment . '</td>
+                                                    <td>' . $accountable . '</td>
+                                                ';
+
+                                            if($accountable!=''){
+                                                echo '
+                                                        <td align="center">
                                                         <a href="addAvailment.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="eye"></span> View</a>
                                                         <a href="editClient.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
                                                     </td>
                                                 </tr>
                                                 ';
-                                                // Delete Client
-                                                // <a href="action.php?id='.$_GET['id'].'&client_id='.$id.'&delete=true" class="btn btn-md btn-outline-secondary"><span data-feather="trash"></span> Delete</a>
-
+                                            } else {
+                                                echo '
+                                                        <td align="center">
+                                                        <a href="accountable.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="user"></span> Accountable</a>
+                                                    </td>
+                                                </tr>
+                                                ';
+                                            }
                                         }
                                     }
                                     ?>
@@ -379,6 +393,8 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Requirements</th>
                                         <th>Liquidation Status</th>
                                         <th>Patient Status</th>
+                                        <th>First Availment</th>
+                                        <th>Accountable</th>
                                         <th>Action</th>
                                     </tr>
                                 </tfoot>
