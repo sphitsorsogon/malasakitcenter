@@ -7,6 +7,7 @@ include_once('./connection.php');
 
 // Get Date and Time
 date_default_timezone_set("Asia/Manila");
+$currdate = date('Y/m/d h:ia');
 $currentDate = date("Y/m/d");
 
 $user_id = $_GET['id'];
@@ -24,7 +25,7 @@ FROM tbl_client a where patient_status = 'Discharged' LIMIT 30";
     $address = array(); 
     $birthdate = array(); 
     $admissiondate = array(); 
-    $purpose = array(); 
+    $purposes = array(); 
     $amount = array(); 
     $requirements = array(); 
 
@@ -39,7 +40,7 @@ FROM tbl_client a where patient_status = 'Discharged' LIMIT 30";
             array_push($address, strval($row['address']));
             array_push($birthdate, strval($row['birthdate']));
             array_push($requirements, strval($row['requirements']));
-            array_push($admissiondate, strval($row['admissiondate']));
+            array_push($admissiondate, strval($row['client_admission']));
             array_push($purposes, strval($row['purposes']));
             array_push($amount, strval($row['amount']));
 
@@ -69,7 +70,7 @@ FROM tbl_client a where patient_status = 'Discharged' LIMIT 30";
                 }
         }
         $exportDate = date('d-m-Y');
-        PhpExcelTemplator::saveToFile('./template.xlsx', './Reports/reports-'.$exportDate.'.xlsx', [
+        PhpExcelTemplator::saveToFile('./template.xlsx', './Reports/Liquidated-Report-'.$exportDate.'.xlsx', [
             '[fullname_client]' => $fullname_client,
             '[fullname]' => $fullname,
             '[age]' => $age,
@@ -82,7 +83,7 @@ FROM tbl_client a where patient_status = 'Discharged' LIMIT 30";
             '[amount]' => $amount,
             '[admissiondate]' => $admissiondate,
         ]);
-        PhpExcelTemplator::saveToFile('./template.xlsx', './backup-reports/reports-'.$exportDate.'.xlsx', [
+        PhpExcelTemplator::saveToFile('./template.xlsx', './backup-reports/Liquidated-Report-'.$exportDate.'.xlsx', [
             '[fullname_client]' => $fullname_client,
             '[fullname]' => $fullname,
             '[age]' => $age,
@@ -100,8 +101,13 @@ FROM tbl_client a where patient_status = 'Discharged' LIMIT 30";
         
     }
 
+    
+
 $sql5 = "UPDATE tbl_client SET patient_status='', accountable='', requirements='' WHERE patient_status='Discharged'";
     if ($conn->query($sql5)) {
+        $filename = 'Liquidated-Report-'.$exportDate.'.xlsx';
+        $sqlfilename = "INSERT INTO excel(`filename`,`date`) VALUES ('$filename','$currdate')";
+        mysqli_query($conn, $sqlfilename);
         $user_id = $_GET['id'];
         $url = "./home.php?id=$user_id";
         $url = str_replace(PHP_EOL, '', $url);

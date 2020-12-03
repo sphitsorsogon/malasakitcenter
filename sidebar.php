@@ -22,7 +22,7 @@
                         
                 ?>
             <?php
-              if($total_discharged >= 30){
+              if($total_discharged >= 1){
                 echo '
                 <a class="nav-link" href="./exportexcel.php?id='.$id.'">
                   <span data-feather="bar-chart-2"></span>
@@ -40,6 +40,12 @@
             ?>
             
 
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="excelfile.php?id=<?php echo $_GET['id'] ?>">
+              <span data-feather="bar-chart-2"></span>
+              List of Exported Data
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./exportsql.php?id=<?php echo $id ?>">
