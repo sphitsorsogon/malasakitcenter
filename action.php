@@ -235,6 +235,37 @@ if (isset($_GET['deleteavailment'])) {
     
 }
 
+if (isset($_GET['updateAccountable'])) {
+    $id = $_GET['id'];
+    $client_id = $_GET['client_id'];
+
+    $sqluser = "SELECT user_fullname FROM user WHERE id = $client_id";
+    $resultuser = mysqli_query($conn, $sqluser);
+    if (mysqli_num_rows($resultuser) > 0) {
+        while ($rowuser = mysqli_fetch_assoc($resultuser)) {
+            $user_fullname = $rowuser['user_fullname'];
+        }
+    }
+
+    $sql = "UPDATE tbl_client SET 
+            accountable='$user_fullname'
+            WHERE 
+            id='$client_id'";
+            if ($conn->query($sql) === TRUE) {
+                 //for logs
+
+                 $sql2 = "INSERT INTO logs(date,action,user)VALUES('$currdate','Update Accountable for Patient ID: $client_id to $user_fullname','$user_fullname')";
+                 if(mysqli_query($conn, $sql2)){
+                    $url = "./home.php?id=$id";
+                    $url = str_replace(PHP_EOL, '', $url);
+                    header("Location: $url");
+                 }
+            } else {
+                echo "Error updating record: " . $conn->error;
+            }
+    
+}
+
 if (isset($_POST['btnEditAvailment'])) {
     $admission_date = $_POST['admissiondate'];
     $amount = $_POST['amount'];

@@ -232,12 +232,25 @@ if (isset($_SESSION['loggedin'])) {
                                                     <td>' . $patient_status . '</td>
                                                     <td>' . $last_availment . '</td>
                                                     <td>' . $accountable . '</td>
-                                                    <td align="center">
+                                                ';
+
+                                            if($accountable!=''){
+                                                echo '
+                                                        <td align="center">
                                                         <a href="addAvailment.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="eye"></span> View</a>
                                                         <a href="editClient.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
                                                     </td>
                                                 </tr>
                                                 ';
+                                            } else {
+                                                echo '
+                                                        <td align="center">
+                                                        <a href="accountable.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="user"></span> Accountable</a>
+                                                    </td>
+                                                </tr>
+                                                ';
+                                            }
+                                                
                                                 // Delete Client
                                                 // <a href="action.php?id='.$_GET['id'].'&client_id='.$id.'&delete=true" class="btn btn-md btn-outline-secondary"><span data-feather="trash"></span> Delete</a>
 

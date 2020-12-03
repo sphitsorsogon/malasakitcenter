@@ -200,107 +200,104 @@ if (isset($_SESSION['loggedin'])) {
                     ?>
                 </h2>
         </div>  
-<h4>
-<?php
-$client_id = $_GET['client_id'];
-$sql = "SELECT admissiondate FROM listofavailment WHERE client_id = $client_id ORDER BY admissiondate DESC LIMIT 1";
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-       $lastadmission = $row['admissiondate'];
-        echo 'Last Admission: ' . $lastadmission;
-        }
-    }
-?>
+    <h4>
+        <?php
+        $client_id = $_GET['client_id'];
+        $sql = "SELECT admissiondate FROM listofavailment WHERE client_id = $client_id ORDER BY admissiondate DESC LIMIT 1";
+            $result = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_assoc($result)) {
+            $lastadmission = $row['admissiondate'];
+                echo 'Last Admission: ' . $lastadmission;
+                }
+            }
+        ?>
+    </h4>
+        <div class="container-fluid mt-3">
+            <div class="row">
+                    <div class="col-md-12 border border-info">
+                        <div class="table-responsive">
+                        <table id="example" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Admission Date</th>
+                                    <th>Amount</th>
+                                    <th>Purpose</th>
+                                    <th>Remarks</th>
+                                    <th>Date of Availment</th>
+                                    <th>First Availment Social Service / MC</th>
+                                    <th>Status</th>
+                                    <th>Accountable</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-</h4>
-       
+                            <?php
+                            $sql = "SELECT * FROM view_clientinfo WHERE client_id = $client_id AND status != 'Complete'  ORDER BY id desc";
+                                $result = mysqli_query($conn, $sql);
+                                if ($result) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $avail_id = $row['id'];
+                                        $fullname = $row['fullname'];
+                                        $age = $row['age'];
+                                        $gender = $row['gender'];
+                                        $address = $row['address'];
+                                        $birthdate = $row['birthdate'];
+                                        $user = $row['user'];
+                                        $admissiondate = $row['admissiondate'];
+                                        $amount = $row['amount'];
+                                        $remarks = $row['remarks'];
+                                        $purpose = $row['purpose'];
+                                        $firstavailment = $row['firstavailment'];
+                                        $dateofavailemnt = $row['dateofavailment'];
+                                        $status = $row['status'];
 
-            <div class="container-fluid mt-3">
-                <div class="row">
-                        <div class="col-md-12 border border-info">
-                            <div class="table-responsive">
-                            <table id="example" class="table table-striped table-bordered" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Admission Date</th>
-                                        <th>Amount</th>
-                                        <th>Purpose</th>
-                                        <th>Remarks</th>
-                                        <th>Date of Availment</th>
-                                        <th>First Availment Social Service / MC</th>
-                                        <th>Status</th>
-                                        <th>Accountable</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                        echo '
+                                            <tr>
+                                                <td>' . $avail_id . '</td>
+                                                <td>' . $admissiondate . '</td>
+                                                <td>' . $amount . '</td>
+                                                <td>' . $purpose . '</td>
+                                                <td>' . $remarks . '</td>
+                                                <td>' . $dateofavailemnt . '</td>
+                                                <td>' . $firstavailment . '</td>
+                                                <td>' . $status . '</td>
+                                                <td>' . $user . '</td>
+                                                <td align="center">
+                                                    <a href="editAvailment.php?id='.$_GET['id'].'&avail_id='.$avail_id.'&client_id='.$client_id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
+                                                </button>
+                                                </td>
+                                            </tr>
+                                            ';
 
-                                <?php
-                                $sql = "SELECT * FROM view_clientinfo WHERE client_id = $client_id AND status != 'Complete'  ORDER BY id desc";
-                                    $result = mysqli_query($conn, $sql);
-                                    if ($result) {
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                            $avail_id = $row['id'];
-                                            $fullname = $row['fullname'];
-                                            $age = $row['age'];
-                                            $gender = $row['gender'];
-                                            $address = $row['address'];
-                                            $birthdate = $row['birthdate'];
-                                            $user = $row['user'];
-                                            $admissiondate = $row['admissiondate'];
-                                            $amount = $row['amount'];
-                                            $remarks = $row['remarks'];
-                                            $purpose = $row['purpose'];
-                                            $firstavailment = $row['firstavailment'];
-                                            $dateofavailemnt = $row['dateofavailment'];
-                                            $status = $row['status'];
+                                            // <a href="action.php?id='.$_GET['id'].'&avail_id='.$avail_id.'&deleteavailment=true" class="btn btn-md btn-outline-secondary"><span data-feather="trash"></span> Delete</a>
 
-                                            echo '
-                                                <tr>
-                                                    <td>' . $avail_id . '</td>
-                                                    <td>' . $admissiondate . '</td>
-                                                    <td>' . $amount . '</td>
-                                                    <td>' . $purpose . '</td>
-                                                    <td>' . $remarks . '</td>
-                                                    <td>' . $dateofavailemnt . '</td>
-                                                    <td>' . $firstavailment . '</td>
-                                                    <td>' . $status . '</td>
-                                                    <td>' . $user . '</td>
-                                                    <td align="center">
-                                                     <a href="editAvailment.php?id='.$_GET['id'].'&avail_id='.$avail_id.'&client_id='.$client_id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
-                                                    </button>
-                                                    </td>
-                                                </tr>
-                                                ';
-
-                                                // <a href="action.php?id='.$_GET['id'].'&avail_id='.$avail_id.'&deleteavailment=true" class="btn btn-md btn-outline-secondary"><span data-feather="trash"></span> Delete</a>
-
-                                        }
                                     }
-                                    ?>
+                                }
+                                ?>
 
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Admission Date</th>
-                                        <th>Amount</th>
-                                        <th>Purpose</th>
-                                        <th>Remarks</th>
-                                        <th>Date of Availment</th>
-                                        <th>First Availment Social Service / MC</th>
-                                        <th>Status</th>
-                                        <th>Accountable</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Admission Date</th>
+                                    <th>Amount</th>
+                                    <th>Purpose</th>
+                                    <th>Remarks</th>
+                                    <th>Date of Availment</th>
+                                    <th>First Availment Social Service / MC</th>
+                                    <th>Status</th>
+                                    <th>Accountable</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
-                </div>                           
-            </div>
+                </div>
+            </div>                           
+        </div>
 
 
 
