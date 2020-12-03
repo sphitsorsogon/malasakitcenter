@@ -326,6 +326,7 @@ if (isset($_SESSION['loggedin'])) {
                                             $patient_status = $row['patient_status'];
                                             $beneficiary_name = $row['fullname_client'];
                                             $last_availment = $row['last_availment'];
+                                            $accountable = $row['accountable'];
 
                                             $sql2 = "SELECT SUM(amount) as balance FROM listofavailment WHERE client_id = $id && status != 'Complete' ";
                                                 $result2 = mysqli_query($conn, $sql2);
