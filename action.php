@@ -332,9 +332,6 @@ if (isset($_POST['btnEditAvailment'])) {
         $sql2 = "INSERT INTO logs(date,action,user) VALUES ('$currdate','$string_data$str','$user_fullname')";
         
         if(mysqli_query($conn, $sql2)){
-            $sql3 = "INSERT INTO logs(date,action,user) VALUES ('$currdate','Update Availment Date of Patient with Availment ID: $avail_id to $firstavailment','$user_fullname')";
-            mysqli_query($conn, $sql3);
-
             $sql_availment = "SELECT dateofavailment FROM listofavailment WHERE client_id = $client_id AND `status` != 'Complete' ORDER BY dateofavailment ASC LIMIT 1";
                 $result_availment = mysqli_query($conn, $sql_availment);
                 if (mysqli_num_rows($result_availment) > 0) {
@@ -342,6 +339,9 @@ if (isset($_POST['btnEditAvailment'])) {
                         $first_availment_date = $row['dateofavailment'];
                     }
                 }
+            $sql3 = "INSERT INTO logs(date,action,user) VALUES ('$currdate','Update Availment Date of Patient with Availment ID: $avail_id to $first_availment_date','$user_fullname')";
+            mysqli_query($conn, $sql3);
+
             $sql = "UPDATE tbl_client SET 
             client_admission='$admission_date',
             last_availment='$first_availment_date'
