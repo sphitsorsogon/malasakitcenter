@@ -174,7 +174,6 @@ if (isset($_POST['btnAddAvailment'])) {
         remarks,
         firstavailment,
         dateofavailment,
-        -- status,
         user
         ) VALUES (
         '$client_id',
@@ -184,7 +183,6 @@ if (isset($_POST['btnAddAvailment'])) {
         '$remarks',
         '$firstavailment',
         '$dateofavailment',
-        -- '$status',
         '$user_fullname'
         )";
 
@@ -192,10 +190,18 @@ if (isset($_POST['btnAddAvailment'])) {
             $sql3 = "INSERT INTO logs(date,action,user) VALUES ('$currdate','Update Admission Date of Patient with ID $id to $admission_date','$user_fullname')";
             mysqli_query($conn, $sql3);
 
-                $sql = "UPDATE tbl_client SET 
-                client_admission='$admission_date'
-                WHERE 
-                id='$client_id'";
+            $sql_availment = "SELECT dateofavailment FROM listofavailment WHERE client_id = $client_id AND `status` != 'Complete' ORDER BY dateofavailment ASC LIMIT 1";
+                $result_availment = mysqli_query($conn, $sql_availment);
+                if (mysqli_num_rows($result_availment) > 0) {
+                    while ($row = mysqli_fetch_assoc($result_availment)) {
+                        $first_availment_date = $row['dateofavailment'];
+                    }
+                }
+            $sql = "UPDATE tbl_client SET 
+            client_admission='$admission_date',
+            last_availment='$first_availment_date'
+            WHERE 
+            id='$client_id'";
             if ($conn->query($sql) === TRUE) {
                  //for logs
                  $sql2 = "INSERT INTO logs(date,action,user)VALUES('$currdate','Add new Availment for patient $client_name with ID $client_id amounting to $amount','$user_fullname')";
@@ -240,6 +246,7 @@ if (isset($_POST['btnEditAvailment'])) {
     $user_fullname = $_POST['user_fullname'];
     $avail_id = $_GET['avail_id'];
     $id = $_GET['id'];
+    $client_id = $_GET['client_id'];
 
 
         $sql = "UPDATE listofavailment SET 
@@ -249,7 +256,6 @@ if (isset($_POST['btnEditAvailment'])) {
         remarks='$remarks',
         firstavailment='$firstavailment', 
         dateofavailment='$dateofavailment', 
-        -- status='$status', 
         user='$user_fullname'
         WHERE 
         id='$avail_id'";
@@ -295,16 +301,23 @@ if (isset($_POST['btnEditAvailment'])) {
         $sql2 = "INSERT INTO logs(date,action,user) VALUES ('$currdate','$string_data$str','$user_fullname')";
         
         if(mysqli_query($conn, $sql2)){
-            $sql = "UPDATE tbl_client SET 
-            client_admission='$admission_date'
-            WHERE 
-            id='$id'";
-            $sql3 = "INSERT INTO logs(date,action,user) VALUES ('$currdate','Update Admission Date of Patient with ID $id to $admission_date','$user_fullname')";
-            if ($conn->query($sql) === TRUE) {
-                if(mysqli_query($conn, $sql3)){
-                    updateBalance($conn, $id);
+            $sql3 = "INSERT INTO logs(date,action,user) VALUES ('$currdate','Update Availment Date of Patient with Availment ID: $avail_id to $firstavailment','$user_fullname')";
+            mysqli_query($conn, $sql3);
+
+            $sql_availment = "SELECT dateofavailment FROM listofavailment WHERE client_id = $client_id AND `status` != 'Complete' ORDER BY dateofavailment ASC LIMIT 1";
+                $result_availment = mysqli_query($conn, $sql_availment);
+                if (mysqli_num_rows($result_availment) > 0) {
+                    while ($row = mysqli_fetch_assoc($result_availment)) {
+                        $first_availment_date = $row['dateofavailment'];
+                    }
                 }
-                
+            $sql = "UPDATE tbl_client SET 
+            client_admission='$admission_date',
+            last_availment='$first_availment_date'
+            WHERE 
+            id='$client_id'";
+            if ($conn->query($sql) === TRUE) {
+                    updateBalance($conn, $id);
             } else {
                 echo "Error updating record: " . $conn->error;
             }

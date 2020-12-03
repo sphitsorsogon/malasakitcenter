@@ -11,42 +11,6 @@ $currentDate = date("Y/m/d");
 
 $user_id = $_GET['id'];
 
-// $filename = "Report-$currentDate.xls"; // File Name
-// // Download file
-// header("Content-Disposition: attachment; filename=\"$filename\"");
-// header("Content-Type: application/vnd.ms-excel");
-// if (isset($_POST['btnExportData'])) {
-    // $sql = "SELECT * from view_clientinfo";
-    // $result = mysqli_query($conn, $sql);
-
-    // if (mysqli_num_rows($result) > 0) {
-    //     $flag = false;
-    //     while ($row = mysqli_fetch_assoc($result)) {
-            // if (!$flag) {
-            //     // display field/column names as first row
-            //     echo implode("\t", array_keys($row)) . "\r\n";
-            //     $flag = true;
-            // }
-            // echo implode("\t", array_values($row)) . "\r\n";
-    //     }
-    // } else {
-    //     echo "0 results";
-    // }
-    // mysqli_close($conn);
-// }
-
-
-// name 
-// name of beneficiary
-// age
-// gender
-// address 
-// birthday
-// date of admission
-// purpose
-// amount requirments
-
-
 $sql = "SELECT a.*,
 (SELECT GROUP_CONCAT(purpose SEPARATOR ', ') FROM listofavailment WHERE client_id = a.id GROUP BY client_id) AS purposes, 
 (SELECT SUM(amount) FROM listofavailment WHERE client_id = a.id AND `status` != 'Complete' GROUP BY admissiondate) AS amount

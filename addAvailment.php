@@ -269,7 +269,7 @@ $sql = "SELECT admissiondate FROM listofavailment WHERE client_id = $client_id O
                                                     <td>' . $status . '</td>
                                                     <td>' . $user . '</td>
                                                     <td align="center">
-                                                     <a href="editAvailment.php?id='.$_GET['id'].'&avail_id='.$avail_id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
+                                                     <a href="editAvailment.php?id='.$_GET['id'].'&avail_id='.$avail_id.'&client_id='.$client_id.'" class="btn btn-md btn-outline-secondary"><span data-feather="send"></span> Edit</a>
                                                     </button>
                                                     </td>
                                                 </tr>

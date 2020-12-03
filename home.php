@@ -168,6 +168,7 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Requirements</th>
                                         <th>Liquidation Status</th>
                                         <th>Patient Status</th>
+                                        <th>Last Availment</th>
                                         <th>Accountable</th>
                                         <th>Action</th>
                                     </tr>
@@ -192,6 +193,7 @@ if (isset($_SESSION['loggedin'])) {
                                             $patient_status = $row['patient_status'];
                                             $beneficiary_name = $row['fullname_client'];
                                             $accountable = $row['accountable'];
+                                            $last_availment = $row['last_availment'];
 
                                             $sql2 = "SELECT SUM(amount) as balance FROM listofavailment WHERE client_id = $id && status != 'Complete' ";
                                                 $result2 = mysqli_query($conn, $sql2);
@@ -228,6 +230,7 @@ if (isset($_SESSION['loggedin'])) {
                                                     echo' 
                                                     </td>
                                                     <td>' . $patient_status . '</td>
+                                                    <td>' . $last_availment . '</td>
                                                     <td>' . $accountable . '</td>
                                                     <td align="center">
                                                         <a href="addAvailment.php?id='.$_GET['id'].'&client_id='.$id.'" class="btn btn-md btn-outline-secondary"><span data-feather="eye"></span> View</a>
@@ -255,6 +258,7 @@ if (isset($_SESSION['loggedin'])) {
                                         <th>Requirements</th>
                                         <th>Liquidation Status</th>
                                         <th>Patient Status</th>
+                                        <th>Last Availment</th>
                                         <th>Accountable</th>
                                         <th>Action</th>
                                     </tr>

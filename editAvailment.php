@@ -87,7 +87,7 @@ if (isset($_SESSION['loggedin'])) {
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
                     <h1 class="h2">Edit Availment</h1>
                 </div>
-                    <form action="action.php?id=<?php echo $_GET['id'] ?>&avail_id=<?php echo $_GET['avail_id'] ?>" method="POST">
+                    <form action="action.php?id=<?php echo $_GET['id'] ?>&avail_id=<?php echo $_GET['avail_id'] ?>&client_id=<?php echo $_GET['client_id'] ?>" method="POST">
                         <div class="row">
                             <div class="col-2">
                                 <div class="form-group">
