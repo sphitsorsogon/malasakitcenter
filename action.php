@@ -63,7 +63,8 @@ if (isset($_POST['btnEditClient'])) {
     $patient_status = $_POST['patient_status'];
     $requirements = $_POST['requirements'];
     $accountable = $_POST['accountable'];
-    $id = $_GET['client_id'];
+    $client_id = $_GET['client_id'];
+    $id = $_GET['id'];
 
         $sql = "UPDATE tbl_client SET 
         fullname='$fullname', 
@@ -75,14 +76,14 @@ if (isset($_POST['btnEditClient'])) {
         birthdate='$birthdate',
         requirements = '$requirements'
         WHERE 
-        id='$id'";
+        id='$client_id'";
     
 
     //for logs
-    $fetch_previous_data = "SELECT * FROM tbl_client where id = '$id'";
+    $fetch_previous_data = "SELECT * FROM tbl_client where id = '$client_id'";
     $res = mysqli_query($conn, $fetch_previous_data);
     $previous_data = mysqli_fetch_array($res, MYSQLI_ASSOC);
-    $string_data = "Change data of Patient with ID $id ";
+    $string_data = "Change data of Patient with ID $client_id ";
     $str = "";
 
     if ($conn->query($sql) === TRUE) {
@@ -239,7 +240,7 @@ if (isset($_GET['updateAccountable'])) {
     $id = $_GET['id'];
     $client_id = $_GET['client_id'];
 
-    $sqluser = "SELECT user_fullname FROM user WHERE id = $client_id";
+    $sqluser = "SELECT user_fullname FROM user WHERE id = $id";
     $resultuser = mysqli_query($conn, $sqluser);
     if (mysqli_num_rows($resultuser) > 0) {
         while ($rowuser = mysqli_fetch_assoc($resultuser)) {

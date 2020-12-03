@@ -78,7 +78,7 @@ if (isset($_SESSION['loggedin'])) {
 
                 $yes = 'yes';
                 echo '
-                    <a href="action.php?id='.$_GET['id'].'&client_id='.$id.'&updateAccountable='.$yes.'" class="btn btn-md btn-outline-secondary"><span data-feather=""></span> Yes</a>
+                    <a href="action.php?id='.$_GET['id'].'&client_id='.$client_id.'&updateAccountable='.$yes.'" class="btn btn-md btn-outline-secondary"><span data-feather=""></span> Yes</a>
                     <a href="home.php?id='.$_GET['id'].'" class="btn btn-md btn-outline-secondary"><span data-feather=""></span> No</a>
                 
                 ';
